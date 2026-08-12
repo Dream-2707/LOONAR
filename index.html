@@ -1,0 +1,1438 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🌙 LOONAR — Celebrate the Unseen Beauty of Every Moment</title>
+<style>
+/* ============================================================
+   LOONAR — deliberately single-theme "moonlit sky" world.
+   The brand is night/moonlight-native, so the page commits to
+   one twilight palette rather than swapping to a daylight theme.
+   ============================================================ */
+:root{
+  --purple:#5B2A86;
+  --purple-soft:#7B4CAE;
+  --midnight:#172B5B;
+  --royal:#2867C7;
+  --lavender:#B9A7E8;
+  --sky:#9CC9F5;
+  --champagne:#D9C08C;
+  --ivory:#F6F2EA;
+
+  --bg-0:#0B1128;
+  --bg-1:#121B3E;
+  --bg-2:#1D1B4A;
+  --bg-3:#2A1F55;
+
+  --ink:#F1EEFB;
+  --ink-dim:#C4BCE6;
+  --ink-faint:#8E86B8;
+
+  --line:rgba(185,167,232,0.16);
+  --line-strong:rgba(185,167,232,0.32);
+  --surface:rgba(255,255,255,0.035);
+  --surface-hi:rgba(255,255,255,0.07);
+  --glow-purple:0 0 70px rgba(91,42,134,0.45);
+  --glow-blue:0 0 70px rgba(40,103,199,0.35);
+
+  --font-display:Georgia,'Iowan Old Style','Palatino Linotype','Book Antiqua',serif;
+  --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+
+  --radius-lg:22px;
+  --radius-md:14px;
+  --radius-sm:9px;
+  --container:1240px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 640px at 12% -10%, rgba(91,42,134,0.55), transparent 60%),
+    radial-gradient(900px 560px at 92% 8%, rgba(40,103,199,0.38), transparent 55%),
+    linear-gradient(180deg,var(--bg-0),var(--bg-1) 30%,var(--bg-2) 65%,var(--bg-3));
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+#app{min-height:100%;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:400;margin:0;text-wrap:balance;color:var(--ink);}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+img,svg{display:block;max-width:100%;}
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:24px;}
+.eyebrow{
+  font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--champagne);
+  font-weight:600;display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--champagne);opacity:.8;}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 26px;border-radius:999px;border:1px solid transparent;
+  font-size:14.5px;font-weight:600;letter-spacing:.02em;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--royal));color:#fff;box-shadow:0 8px 30px rgba(91,42,134,.45);}
+.btn-primary:hover{box-shadow:0 10px 38px rgba(91,42,134,.65);transform:translateY(-1px);}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--ink);border-color:var(--line-strong);}
+.btn-ghost:hover{background:rgba(255,255,255,.09);border-color:var(--lavender);}
+.btn-gold{background:linear-gradient(135deg,var(--champagne),#B9985A);color:#241a08;}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-sm{padding:9px 16px;font-size:13px;border-radius:999px;}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:4px;}
+
+/* ---------- sparkle/star field decoration ---------- */
+.stars{position:absolute;inset:0;pointer-events:none;background-image:
+  radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.55), transparent 60%),
+  radial-gradient(1.5px 1.5px at 80% 30%, rgba(255,255,255,.4), transparent 60%),
+  radial-gradient(1.5px 1.5px at 60% 70%, rgba(255,255,255,.5), transparent 60%),
+  radial-gradient(2px 2px at 30% 80%, rgba(255,255,255,.4), transparent 60%),
+  radial-gradient(1.5px 1.5px at 92% 85%, rgba(255,255,255,.35), transparent 60%),
+  radial-gradient(1.5px 1.5px at 45% 15%, rgba(255,255,255,.4), transparent 60%);
+  opacity:.7;
+}
+@media (prefers-reduced-motion:no-preference){
+  .twinkle{animation:twinkle 5s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
+}
+
+/* ============ TOPBAR ============ */
+.topbar{background:rgba(0,0,0,.22);border-bottom:1px solid var(--line);font-size:12.5px;}
+.topbar-inner{max-width:var(--container);margin-inline:auto;padding:9px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--ink-dim);}
+.lang-switch{display:flex;align-items:center;gap:6px;flex:none;}
+.lang-switch button{background:none;border:none;color:var(--ink-dim);font-size:12.5px;padding:2px 4px;}
+.lang-switch button.active{color:var(--champagne);font-weight:700;}
+.lang-switch span{color:var(--ink-faint);}
+
+/* ============ HEADER ============ */
+.site-header{position:sticky;top:0;z-index:40;background:rgba(9,13,32,.96);border-bottom:1px solid var(--line);}
+.header-inner{max-width:var(--container);margin-inline:auto;padding:14px 24px;display:flex;align-items:center;gap:22px;}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-strong);border-radius:10px;width:40px;height:40px;align-items:center;justify-content:center;color:var(--ink);}
+.logo{display:flex;align-items:center;gap:10px;flex:none;}
+.logo svg{width:38px;height:38px;}
+.logo-text{display:flex;flex-direction:column;line-height:1;}
+.logo-text strong{font-family:var(--font-display);font-size:21px;letter-spacing:.06em;color:var(--ink);}
+.logo-text em{font-style:normal;font-size:11px;color:var(--champagne);letter-spacing:.05em;}
+.logo-stars{color:var(--champagne);font-size:.7em;letter-spacing:0;vertical-align:super;margin-inline-start:1px;}
+.main-nav{flex:1;}
+.main-nav>ul{list-style:none;display:flex;gap:6px;margin:0;padding:0;justify-content:center;flex-wrap:wrap;}
+.main-nav>ul>li{position:relative;}
+.main-nav>ul>li>a,.main-nav>ul>li>button.top-link{
+  display:block;padding:10px 13px;font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--ink-dim);
+  background:none;border:none;font-family:inherit;
+}
+.main-nav>ul>li>a:hover,.main-nav>ul>li>button.top-link:hover,.main-nav>ul>li.open>button.top-link{color:var(--ink);}
+.mega{
+  position:absolute;top:100%;inset-inline-start:0;min-width:640px;
+  background:linear-gradient(180deg,rgba(23,20,58,.98),rgba(18,27,62,.98));
+  border:1px solid var(--line-strong);border-radius:16px;padding:22px;
+  display:none;grid-template-columns:repeat(3,1fr);gap:22px;box-shadow:0 30px 70px rgba(0,0,0,.55),var(--glow-purple);
+  margin-top:10px;
+}
+li.open .mega{display:grid;}
+.mega-col h5{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--champagne);margin:0 0 10px;}
+.mega-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;}
+.mega-col a{font-size:13.5px;color:var(--ink-dim);}
+.mega-col a:hover{color:var(--sky);}
+.header-actions{display:flex;align-items:center;gap:6px;flex:none;}
+.icon-btn{position:relative;background:none;border:none;color:var(--ink);width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:10px;}
+.icon-btn:hover{background:var(--surface-hi);}
+.icon-btn svg{width:19px;height:19px;}
+.badge-count{position:absolute;top:1px;inset-inline-end:1px;background:var(--champagne);color:#241a08;font-size:10px;font-weight:800;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 3px;}
+
+/* ============ SEARCH OVERLAY ============ */
+.search-overlay{position:fixed;inset:0;background:rgba(6,9,24,.85);backdrop-filter:blur(8px);z-index:70;display:none;padding-top:10vh;}
+.search-overlay.active{display:block;}
+.search-box{max-width:640px;margin:0 auto;padding:0 20px;}
+.search-box input{
+  width:100%;padding:18px 20px;font-size:19px;border-radius:14px;border:1px solid var(--line-strong);
+  background:rgba(255,255,255,.05);color:var(--ink);font-family:var(--font-display);
+}
+.search-box input::placeholder{color:var(--ink-faint);}
+.search-close{display:block;margin:16px auto 0;background:none;border:none;color:var(--ink-dim);font-size:13px;}
+#searchResults{max-width:640px;margin:22px auto 0;padding:0 20px;display:flex;flex-direction:column;gap:8px;}
+.search-hit{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);}
+.search-hit small{color:var(--ink-faint);display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;}
+.search-empty{color:var(--ink-faint);text-align:center;padding-top:10px;font-size:14px;}
+
+/* ============ DRAWERS ============ */
+.scrim{position:fixed;inset:0;background:rgba(4,6,18,.6);z-index:60;display:none;}
+.scrim.active{display:block;}
+.drawer{
+  position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(420px,92vw);background:linear-gradient(180deg,#151238,#0f1636);
+  border-inline-start:1px solid var(--line-strong);z-index:65;transform:translateX(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1);
+  display:flex;flex-direction:column;
+}
+[dir="rtl"] .drawer{transform:translateX(-105%);}
+.drawer.active{transform:translateX(0);}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--line);}
+.drawer-head h3{font-size:19px;}
+.drawer-close{background:none;border:none;color:var(--ink-dim);width:32px;height:32px;}
+.drawer-body{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px;}
+.drawer-empty{color:var(--ink-faint);text-align:center;padding:40px 10px;font-size:14px;}
+.line-item{display:flex;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);}
+.line-thumb{width:64px;height:64px;border-radius:12px;flex:none;}
+.line-info{flex:1;min-width:0;}
+.line-info .name{font-size:14px;font-weight:600;}
+.line-info .meta{font-size:12px;color:var(--ink-faint);margin-top:2px;}
+.line-controls{display:flex;align-items:center;gap:10px;margin-top:8px;}
+.qty-ctrl{display:flex;align-items:center;border:1px solid var(--line-strong);border-radius:999px;}
+.qty-ctrl button{background:none;border:none;color:var(--ink);width:26px;height:26px;font-size:14px;}
+.qty-ctrl span{min-width:20px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums;}
+.line-remove{background:none;border:none;color:var(--ink-faint);font-size:12px;text-decoration:underline;}
+.line-price{font-size:13.5px;font-weight:700;color:var(--champagne);white-space:nowrap;}
+.drawer-foot{border-top:1px solid var(--line);padding:18px 22px;display:flex;flex-direction:column;gap:12px;}
+.coupon-row{display:flex;gap:8px;}
+.coupon-row input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(255,255,255,.04);color:var(--ink);font-size:13px;}
+.coupon-msg{font-size:12px;min-height:14px;}
+.coupon-msg.ok{color:#8fe3b0;}
+.coupon-msg.err{color:#f0a5a5;}
+.select-field{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(255,255,255,.04);color:var(--ink);font-size:13px;}
+.totals-row{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-dim);}
+.totals-row.grand{font-size:17px;color:var(--ink);font-weight:700;padding-top:8px;border-top:1px solid var(--line);}
+.foot-note{font-size:11.5px;color:var(--ink-faint);line-height:1.5;}
+
+/* ============ HERO ============ */
+.hero{position:relative;padding:76px 0 90px;overflow:hidden;}
+.hero-inner{max-width:var(--container);margin-inline:auto;padding:0 24px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;position:relative;z-index:2;}
+.hero-eyebrow{margin-bottom:18px;}
+.hero h1{font-size:clamp(34px,5vw,56px);line-height:1.08;background:linear-gradient(120deg,#fff 10%,var(--lavender) 55%,var(--sky) 90%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero p.lead{margin-top:20px;font-size:17px;color:var(--ink-dim);max-width:46ch;}
+.hero-actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;}
+.hero-visual{position:relative;aspect-ratio:1/1;max-width:440px;justify-self:center;}
+.moon-glow{position:absolute;inset:6%;border-radius:50%;background:radial-gradient(circle at 35% 32%,#fff8ea,var(--sky) 34%,var(--purple-soft) 70%,transparent 78%);filter:blur(2px);box-shadow:0 0 120px 40px rgba(155,201,245,.28);}
+.moon-crescent{position:absolute;inset:6%;border-radius:50%;background:var(--bg-2);box-shadow:-60px 8px 0 0 var(--bg-2);transform:rotate(-18deg);opacity:.001;}
+.hero-visual svg{position:absolute;inset:0;width:100%;height:100%;}
+@media (prefers-reduced-motion:no-preference){
+  .moon-glow{animation:breathe 7s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+}
+
+/* ============ SECTION SHELL ============ */
+section{position:relative;padding:78px 0;}
+.section-head{max-width:640px;margin:0 auto 42px;text-align:center;}
+.section-head.left{margin-inline:0;text-align:start;}
+.section-head h2{font-size:clamp(26px,3.4vw,38px);margin-top:12px;}
+.section-head p{color:var(--ink-dim);margin-top:12px;font-size:15.5px;}
+
+/* ============ TRUST BAR ============ */
+.trustbar{padding:26px 0;border-block:1px solid var(--line);background:rgba(255,255,255,.02);}
+.trustbar .container{display:flex;flex-wrap:wrap;justify-content:center;gap:34px;}
+.trust-item{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-dim);font-weight:600;}
+.trust-item svg{width:18px;height:18px;color:var(--champagne);flex:none;}
+
+/* ============ OCCASION / CATEGORY GRID CARDS ============ */
+.occ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.occ-card{
+  border-radius:var(--radius-lg);padding:26px 18px;text-align:center;border:1px solid var(--line);
+  background:var(--surface);position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+}
+.occ-card:hover{transform:translateY(-5px);border-color:var(--lavender);box-shadow:0 18px 40px rgba(91,42,134,.35);}
+.occ-card .emoji{font-size:30px;display:block;margin-bottom:10px;}
+.occ-card .label{font-size:14px;font-weight:700;}
+.occ-card::after{content:"";position:absolute;inset:0;background:radial-gradient(120px 90px at 50% -10%,rgba(185,167,232,.35),transparent 70%);opacity:0;transition:opacity .25s;}
+.occ-card:hover::after{opacity:1;}
+
+.cat-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:16px;}
+.cat-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 10px;border-radius:var(--radius-md);border:1px solid var(--line);background:var(--surface);transition:.2s;}
+.cat-card:hover{background:var(--surface-hi);border-color:var(--lavender);}
+.cat-card .icon-wrap{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--purple),var(--royal));color:#fff;}
+.cat-card .icon-wrap svg{width:22px;height:22px;}
+.cat-card span{font-size:12.5px;font-weight:600;text-align:center;color:var(--ink-dim);}
+
+/* ============ PRODUCT CARDS ============ */
+.filter-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:34px;}
+.chip{padding:8px 16px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-dim);font-size:12.5px;font-weight:600;}
+.chip.active{background:linear-gradient(135deg,var(--purple),var(--royal));color:#fff;border-color:transparent;}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+.pcard{border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease;}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 20px 46px rgba(0,0,0,.4);border-color:var(--line-strong);}
+.pmedia{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;}
+.pmedia svg{width:44%;height:44%;color:rgba(255,255,255,.92);filter:drop-shadow(0 8px 18px rgba(0,0,0,.35));}
+.pmedia .stars{opacity:.5;}
+.ptag{position:absolute;top:10px;inset-inline-start:10px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:4px 9px;border-radius:999px;text-transform:uppercase;}
+.pwish{position:absolute;top:8px;inset-inline-end:8px;background:rgba(10,10,26,.5);border:1px solid rgba(255,255,255,.2);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;}
+.pwish svg{width:16px;height:16px;}
+.pwish.active svg{fill:#e8869e;color:#e8869e;}
+.pquick{position:absolute;bottom:10px;left:50%;transform:translate(-50%,10px);opacity:0;transition:.2s;background:rgba(0,0,0,.55);color:#fff;border:1px solid rgba(255,255,255,.3);font-size:11.5px;padding:7px 14px;border-radius:999px;white-space:nowrap;}
+.pcard:hover .pquick{opacity:1;transform:translate(-50%,0);}
+.pbody{padding:16px 16px 18px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.pname{font-size:14.5px;font-weight:700;line-height:1.35;}
+.prating{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-faint);}
+.prating .stars-ico{color:var(--champagne);letter-spacing:1px;}
+.pstock{font-size:11px;font-weight:700;letter-spacing:.03em;}
+.pstock.low{color:#e8b25e;}
+.pstock.in{color:#7fd6a0;}
+.pprice{display:flex;align-items:baseline;gap:8px;margin-top:auto;}
+.pprice .now{font-size:16.5px;font-weight:800;color:var(--ink);}
+.pprice .was{font-size:12.5px;color:var(--ink-faint);text-decoration:line-through;}
+.pactions{display:flex;gap:8px;margin-top:4px;}
+.pactions .btn{flex:1;padding:10px 12px;font-size:12.5px;}
+
+/* ============ BUILD YOUR CELEBRATION ============ */
+.wizard{background:linear-gradient(160deg,rgba(91,42,134,.28),rgba(40,103,199,.2));border:1px solid var(--line-strong);border-radius:28px;padding:40px;box-shadow:var(--glow-purple);}
+.wizard-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:28px;}
+.wstep{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px;}
+.wstep h6{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--champagne);margin:0 0 10px;}
+.wstep .opts{display:flex;flex-wrap:wrap;gap:6px;}
+.wopt{padding:7px 11px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-dim);font-size:12px;}
+.wopt.sel{background:linear-gradient(135deg,var(--purple),var(--royal));color:#fff;border-color:transparent;}
+.wizard-result{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:rgba(0,0,0,.22);border-radius:16px;padding:20px 22px;margin-top:6px;}
+.wizard-result .r-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);}
+.wizard-result .r-pkg{font-family:var(--font-display);font-size:22px;margin-top:4px;}
+.wizard-result .r-range{font-size:13px;color:var(--sky);margin-top:4px;}
+
+/* ============ COLLECTIONS ============ */
+.coll-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.coll-card{border-radius:var(--radius-lg);padding:30px 26px;min-height:190px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;border:1px solid var(--line);}
+.coll-card h3{font-size:20px;color:#fff;}
+.coll-card p{font-size:13px;color:rgba(255,255,255,.82);margin-top:6px;max-width:32ch;}
+.coll-card .coll-cta{margin-top:14px;font-size:12px;font-weight:700;color:var(--champagne);}
+.coll-card::before{content:"";position:absolute;inset:0;opacity:.9;}
+.coll-1::before{background:linear-gradient(135deg,#1a2559,#3a2470);}
+.coll-2::before{background:linear-gradient(135deg,#2a1f55,#4b2f7a);}
+.coll-3::before{background:linear-gradient(135deg,#5b2a86,#8a4fae);}
+.coll-4::before{background:linear-gradient(135deg,#172b5b,#1f3f86);}
+.coll-5::before{background:linear-gradient(135deg,#3a2f16,#6b512a);}
+.coll-6::before{background:linear-gradient(135deg,#4a1f3e,#7a2f57);}
+.coll-7::before{background:linear-gradient(135deg,#101d42,#26205e);}
+
+/* ============ PACKAGES ============ */
+.pkg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.pkg-card{border-radius:var(--radius-lg);border:1px solid var(--line-strong);background:var(--surface);padding:28px 24px;display:flex;flex-direction:column;gap:14px;}
+.pkg-card.feature{background:linear-gradient(160deg,rgba(91,42,134,.4),rgba(40,103,199,.28));box-shadow:var(--glow-purple);}
+.pkg-name{font-size:19px;}
+.pkg-from{font-size:11.5px;text-transform:uppercase;color:var(--ink-faint);letter-spacing:.06em;}
+.pkg-price{font-size:26px;font-weight:800;font-family:var(--font-display);}
+.pkg-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--ink-dim);}
+.pkg-list li{display:flex;gap:8px;align-items:flex-start;}
+.pkg-list svg{width:14px;height:14px;color:#7fd6a0;flex:none;margin-top:3px;}
+
+/* ============ ABOUT ============ */
+.about-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:center;}
+.about-moon{aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle at 32% 30%,#fff8ea,var(--sky) 30%,var(--purple) 72%,var(--bg-0) 90%);box-shadow:0 0 100px 20px rgba(91,42,134,.35);position:relative;}
+.about-copy blockquote{font-family:var(--font-display);font-size:22px;line-height:1.5;color:var(--ink);margin:0 0 18px;text-wrap:balance;}
+.about-copy p{color:var(--ink-dim);font-size:14.5px;margin-bottom:10px;}
+.about-copy .sig{margin-top:20px;font-family:var(--font-display);font-size:15px;color:var(--champagne);}
+
+/* ============ NEWSLETTER ============ */
+.newsletter-box{background:linear-gradient(135deg,rgba(91,42,134,.35),rgba(40,103,199,.25));border:1px solid var(--line-strong);border-radius:26px;padding:46px;text-align:center;}
+.nl-form{display:flex;gap:10px;max-width:440px;margin:22px auto 0;}
+.nl-form input{flex:1;padding:13px 16px;border-radius:999px;border:1px solid var(--line-strong);background:rgba(255,255,255,.06);color:var(--ink);font-size:14px;}
+.nl-msg{margin-top:12px;font-size:12.5px;color:var(--sky);min-height:16px;}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--line);padding:60px 0 26px;background:rgba(0,0,0,.2);}
+.footer-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:34px;}
+.footer-brand p{color:var(--ink-dim);font-size:13.5px;margin-top:12px;max-width:30ch;}
+.footer-col h6{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--champagne);margin:0 0 14px;}
+.footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+.footer-col a{font-size:13px;color:var(--ink-dim);}
+.footer-col a:hover{color:var(--sky);}
+.footer-social{display:flex;gap:10px;margin-top:16px;}
+.footer-social a{width:34px;height:34px;border-radius:50%;border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;}
+.footer-social svg{width:15px;height:15px;}
+.footer-bottom{max-width:var(--container);margin:40px auto 0;padding:20px 24px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--ink-faint);}
+
+/* ============ WHATSAPP FAB ============ */
+.wa-fab{position:fixed;bottom:22px;inset-inline-end:22px;z-index:55;background:#25D366;color:#08260f;border:none;border-radius:999px;padding:13px 18px 13px 14px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.4);}
+[dir="rtl"] .wa-fab{padding:13px 14px 13px 18px;}
+.wa-fab svg{width:22px;height:22px;}
+@media (prefers-reduced-motion:no-preference){
+  .wa-fab{animation:pulse 2.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 10px 30px rgba(0,0,0,.4),0 0 0 0 rgba(37,211,102,.5)}50%{box-shadow:0 10px 30px rgba(0,0,0,.4),0 0 0 10px rgba(37,211,102,0)}}
+}
+
+/* ============ MODAL (quick view) ============ */
+.modal-scrim{position:fixed;inset:0;background:rgba(4,6,18,.7);z-index:80;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-scrim.active{display:flex;}
+.modal-box{background:linear-gradient(180deg,#161241,#101a3c);border:1px solid var(--line-strong);border-radius:22px;max-width:760px;width:100%;max-height:86vh;overflow-y:auto;padding:0;display:grid;grid-template-columns:1fr 1fr;}
+.modal-media{display:flex;align-items:center;justify-content:center;position:relative;min-height:280px;}
+.modal-media svg{width:40%;height:40%;color:#fff;}
+.modal-info{padding:30px;display:flex;flex-direction:column;gap:12px;}
+.modal-close{position:absolute;top:14px;inset-inline-end:14px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.3);color:#fff;width:32px;height:32px;border-radius:50%;z-index:2;}
+.modal-info .pprice{font-size:20px;}
+.modal-desc{font-size:13.5px;color:var(--ink-dim);}
+.modal-qty{display:flex;align-items:center;gap:14px;margin-top:6px;}
+.modal-actions{display:flex;gap:10px;margin-top:8px;}
+.modal-meta{font-size:11.5px;color:var(--ink-faint);display:flex;gap:14px;flex-wrap:wrap;}
+
+/* ============ TOAST ============ */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#151238;border:1px solid var(--line-strong);color:var(--ink);padding:12px 20px;border-radius:999px;font-size:13.5px;z-index:90;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 12px 30px rgba(0,0,0,.4);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1080px){
+  .product-grid{grid-template-columns:repeat(3,1fr);}
+  .occ-grid{grid-template-columns:repeat(4,1fr);}
+  .cat-grid{grid-template-columns:repeat(4,1fr);}
+  .coll-grid{grid-template-columns:repeat(2,1fr);}
+  .pkg-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .wizard-steps{grid-template-columns:repeat(3,1fr);}
+}
+@media (max-width:860px){
+  .main-nav{position:fixed;top:0;inset-inline-start:0;bottom:0;width:82%;max-width:340px;background:#12173a;border-inline-end:1px solid var(--line-strong);transform:translateX(-105%);transition:transform .3s;overflow-y:auto;padding:80px 22px 22px;z-index:56;}
+  [dir="rtl"] .main-nav{transform:translateX(105%);}
+  .main-nav.open{transform:translateX(0);}
+  .main-nav>ul{flex-direction:column;align-items:flex-start;gap:2px;}
+  .mega{position:static;min-width:0;display:none !important;grid-template-columns:1fr;box-shadow:none;border:none;background:none;padding:8px 0 8px 14px;margin:0;}
+  li.open .mega{display:grid !important;}
+  .nav-toggle{display:flex;}
+  .hero-inner{grid-template-columns:1fr;text-align:center;}
+  .hero p.lead{margin-inline:auto;}
+  .hero-actions{justify-content:center;}
+  .hero-visual{order:-1;max-width:280px;}
+  .about-wrap{grid-template-columns:1fr;}
+  .about-moon{max-width:220px;margin:0 auto;}
+  .modal-box{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+  .occ-grid{grid-template-columns:repeat(2,1fr);}
+  .cat-grid{grid-template-columns:repeat(3,1fr);}
+  .product-grid{grid-template-columns:repeat(2,1fr);}
+  .coll-grid{grid-template-columns:1fr;}
+  .pkg-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .wizard{padding:24px 18px;}
+  .wizard-steps{grid-template-columns:1fr 1fr;}
+  .nl-form{flex-direction:column;}
+}
+</style>
+
+<div id="app" dir="ltr" lang="en">
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span data-i18n="topbar">✨ Fast Qatar Delivery · Secure Checkout · WhatsApp Ordering Available</span>
+      <div class="lang-switch">
+        <button data-lang-btn="en" class="active">EN</button>
+        <span>/</span>
+        <button data-lang-btn="ar">العربية</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a href="#home" class="logo" aria-label="LOONAR home">
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="lgBase" x1="4" y1="6" x2="42" y2="42"><stop stop-color="#5B2A86"/><stop offset="1" stop-color="#172B5B"/></linearGradient>
+            <linearGradient id="lgLight" x1="16" y1="2" x2="42" y2="30"><stop stop-color="#F6F2EA"/><stop offset="1" stop-color="#B9A7E8"/></linearGradient>
+            <clipPath id="lgClip"><circle cx="24" cy="24" r="21"/></clipPath>
+          </defs>
+          <g clip-path="url(#lgClip)">
+            <circle cx="24" cy="24" r="21" fill="url(#lgBase)"/>
+            <circle cx="33" cy="16" r="17" fill="url(#lgLight)"/>
+            <circle cx="35" cy="30" r="3.2" fill="url(#lgBase)"/>
+          </g>
+          <circle cx="24" cy="24" r="21" fill="none" stroke="rgba(255,255,255,.16)"/>
+          <path d="M40 4 L41.8 8.2 L46 10 L41.8 11.8 L40 16 L38.2 11.8 L34 10 L38.2 8.2 Z" fill="#D9C08C"/>
+          <circle cx="45.5" cy="20" r="1.2" fill="#D9C08C"/>
+          <circle cx="34" cy="2.2" r="0.9" fill="#B9A7E8"/>
+        </svg>
+        <span class="logo-text"><strong>LOONAR<span class="logo-stars">***</span></strong><em>لونار</em></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <ul id="navList"></ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="searchBtn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+        <button class="icon-btn" id="wishBtn" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.6 8 2 4.5 5.6 4a5 5 0 0 1 6.4 2.3A5 5 0 0 1 18.4 4C22 4.5 23.4 8 22 11.7 19.5 16.4 12 21 12 21z"/></svg>
+          <span class="badge-count" id="wishCount">0</span>
+        </button>
+        <button class="icon-btn" id="cartBtn" aria-label="Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 2H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
+          <span class="badge-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <input id="searchInput" type="text" data-i18n-ph="searchPh" placeholder="What are you celebrating?" autocomplete="off">
+      <button class="search-close" id="searchClose" data-i18n="closeSearch">Close ✕</button>
+    </div>
+    <div id="searchResults"></div>
+  </div>
+
+  <div class="scrim" id="scrim"></div>
+
+  <aside class="drawer" id="cartDrawer" aria-label="Shopping cart">
+    <div class="drawer-head"><h3 data-i18n="yourCart">Your Cart</h3><button class="drawer-close" data-close-drawer>&times;</button></div>
+    <div class="drawer-body" id="cartBody"></div>
+    <div class="drawer-foot" id="cartFoot"></div>
+  </aside>
+
+  <aside class="drawer" id="wishDrawer" aria-label="Wishlist">
+    <div class="drawer-head"><h3 data-i18n="yourWishlist">Your Wishlist</h3><button class="drawer-close" data-close-drawer>&times;</button></div>
+    <div class="drawer-body" id="wishBody"></div>
+  </aside>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="stars twinkle" style="inset:0 0 40% 0;"></div>
+      <div class="hero-inner">
+        <div>
+          <span class="eyebrow" data-i18n="heroEyebrow">LOONAR · QATAR</span>
+          <h1 data-i18n="heroTitle">Celebrate the Unseen Beauty of Every Moment.</h1>
+          <p class="lead" data-i18n="heroLead">From little milestones to unforgettable celebrations, LOONAR brings beautiful moments to life with thoughtfully curated decorations, balloons and gifts.</p>
+          <div class="hero-actions">
+            <a href="#shop" class="btn btn-primary" data-i18n="shopCelebrations">Shop Celebrations</a>
+            <a href="#collections" class="btn btn-ghost" data-i18n="exploreCollections">Explore Collections</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="moon-glow"></div>
+          <svg viewBox="0 0 400 400">
+            <defs><radialGradient id="hgrad" cx="35%" cy="30%"><stop offset="0%" stop-color="#fff8ea"/><stop offset="35%" stop-color="#9CC9F5"/><stop offset="75%" stop-color="#5B2A86"/><stop offset="100%" stop-color="#12173a" stop-opacity="0"/></radialGradient></defs>
+            <circle cx="200" cy="200" r="150" fill="url(#hgrad)" opacity="0.9"/>
+            <path d="M255 70a150 150 0 1 0 0 260 118 118 0 0 1 0-260z" fill="#0B1128" opacity="0.55"/>
+            <g fill="#D9C08C" class="twinkle"><circle cx="70" cy="90" r="2.2"/><circle cx="330" cy="120" r="1.6"/><circle cx="60" cy="300" r="1.6"/><circle cx="345" cy="260" r="2"/></g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="trustbar">
+      <div class="container" id="trustRow"></div>
+    </section>
+
+    <section id="occasions">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="shopByOccasion">Shop by Occasion</span>
+          <h2 data-i18n="whatCelebrating">What are you celebrating?</h2>
+        </div>
+        <div class="occ-grid" id="occGrid"></div>
+      </div>
+    </section>
+
+    <section id="category">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="shopByCategory">Shop by Category</span>
+          <h2 data-i18n="everyDetail">Every detail of your celebration</h2>
+        </div>
+        <div class="cat-grid" id="catGrid"></div>
+      </div>
+    </section>
+
+    <section id="build">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="buildEyebrow">Your Personal Celebration Stylist</span>
+          <h2 data-i18n="buildTitle">Build Your Celebration</h2>
+          <p data-i18n="buildLead">Tell us a little, and LOONAR will recommend the perfect package.</p>
+        </div>
+        <div class="wizard">
+          <div class="wizard-steps" id="wizardSteps"></div>
+          <div class="wizard-result" id="wizardResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="collections">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="curatedFor">LOONAR Collections</span>
+          <h2 data-i18n="curatedTitle">Curated for every kind of moment</h2>
+        </div>
+        <div class="coll-grid" id="collGrid"></div>
+      </div>
+    </section>
+
+    <section id="shop">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="featured">Featured Products</span>
+          <h2 data-i18n="featuredTitle">Ready to bring the magic home</h2>
+        </div>
+        <div class="filter-row" id="filterRow"></div>
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section id="packages">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="packagesEyebrow">Celebration Packages</span>
+          <h2 data-i18n="packagesTitle">Complete celebrations, beautifully bundled</h2>
+        </div>
+        <div class="pkg-grid" id="pkgGrid"></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="about-wrap">
+          <div class="about-moon" aria-hidden="true"></div>
+          <div class="about-copy">
+            <span class="eyebrow" data-i18n="aboutEyebrow">About LOONAR</span>
+            <blockquote data-i18n="aboutQuote">"Just as the moon reveals different sides of its beauty throughout the night, life's most precious moments reveal themselves through the celebrations we create together."</blockquote>
+            <p data-i18n="aboutP1">LOONAR was created to make those moments brighter — from the smallest surprise to the biggest celebration.</p>
+            <p data-i18n="aboutP2">Because every moment has a beauty worth discovering.</p>
+            <div class="sig" data-i18n="aboutSig">— The LOONAR Studio, Doha</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="newsletter">
+      <div class="container">
+        <div class="newsletter-box">
+          <h2 data-i18n="nlTitle">Be the first to discover our new collections</h2>
+          <form class="nl-form" id="nlForm">
+            <input type="email" required id="nlEmail" data-i18n-ph="nlPh" placeholder="Enter your email">
+            <button class="btn btn-gold" type="submit" data-i18n="nlBtn">Join LOONAR</button>
+          </form>
+          <div class="nl-msg" id="nlMsg"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:36px;height:36px;">
+            <defs>
+              <linearGradient id="lgBaseF" x1="4" y1="6" x2="42" y2="42"><stop stop-color="#5B2A86"/><stop offset="1" stop-color="#172B5B"/></linearGradient>
+              <linearGradient id="lgLightF" x1="16" y1="2" x2="42" y2="30"><stop stop-color="#F6F2EA"/><stop offset="1" stop-color="#B9A7E8"/></linearGradient>
+              <clipPath id="lgClipF"><circle cx="24" cy="24" r="21"/></clipPath>
+            </defs>
+            <g clip-path="url(#lgClipF)">
+              <circle cx="24" cy="24" r="21" fill="url(#lgBaseF)"/>
+              <circle cx="33" cy="16" r="17" fill="url(#lgLightF)"/>
+              <circle cx="35" cy="30" r="3.2" fill="url(#lgBaseF)"/>
+            </g>
+            <circle cx="24" cy="24" r="21" fill="none" stroke="rgba(255,255,255,.16)"/>
+            <path d="M40 4 L41.8 8.2 L46 10 L41.8 11.8 L40 16 L38.2 11.8 L34 10 L38.2 8.2 Z" fill="#D9C08C"/>
+            <circle cx="45.5" cy="20" r="1.2" fill="#D9C08C"/>
+            <circle cx="34" cy="2.2" r="0.9" fill="#B9A7E8"/>
+          </svg>
+          <span class="logo-text"><strong style="font-family:var(--font-display);font-size:22px;">LOONAR<span class="logo-stars">***</span></strong><em style="color:var(--champagne);font-size:12px;">لونار</em></span>
+        </div>
+        <p data-i18n="footerTag">Celebrate the Unseen Beauty of Every Moment.</p>
+        <div class="footer-social" id="footerSocial"></div>
+      </div>
+      <div class="footer-col"><h6 data-i18n="fShop">Shop</h6><ul id="fShopList"></ul></div>
+      <div class="footer-col"><h6 data-i18n="fCelebrate">Celebrations</h6><ul id="fCelebrateList"></ul></div>
+      <div class="footer-col"><h6 data-i18n="fCompany">Company</h6><ul id="fCompanyList"></ul></div>
+      <div class="footer-col"><h6 data-i18n="fHelp">Help</h6><ul id="fHelpList"></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> LOONAR — لونار. <span data-i18n="rights">All rights reserved.</span></span>
+      <span data-i18n="madeFor">Made for Qatar 🇶🇦 · QAR ر.ق</span>
+    </div>
+  </footer>
+
+  <button class="wa-fab" id="waFab">
+    <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16.03 2.67c-7.35 0-13.3 5.95-13.3 13.3 0 2.35.62 4.62 1.79 6.63L2.67 29.33l6.9-1.81a13.24 13.24 0 0 0 6.46 1.65h.01c7.35 0 13.3-5.95 13.3-13.3s-5.96-13.2-13.31-13.2zm0 24.34h-.01a11.05 11.05 0 0 1-5.63-1.54l-.4-.24-4.09 1.07 1.09-3.99-.26-.41a11.03 11.03 0 1 1 20.34-5.93c0 6.1-4.94 11.04-11.04 11.04zm6.05-8.27c-.33-.17-1.96-.97-2.27-1.08-.3-.11-.53-.17-.75.17-.22.33-.86 1.08-1.06 1.3-.2.22-.39.25-.72.08-.33-.17-1.4-.52-2.66-1.65-.98-.88-1.65-1.96-1.84-2.29-.19-.33-.02-.51.15-.68.15-.15.33-.39.5-.58.17-.2.22-.33.33-.55.11-.22.06-.42-.03-.58-.08-.17-.75-1.81-1.03-2.48-.27-.65-.55-.56-.75-.57-.19-.01-.42-.01-.64-.01-.22 0-.58.08-.89.42-.3.33-1.17 1.15-1.17 2.79 0 1.65 1.2 3.24 1.37 3.46.17.22 2.36 3.6 5.72 5.05.8.35 1.42.55 1.91.7.8.25 1.53.22 2.11.13.64-.1 1.96-.8 2.24-1.58.28-.77.28-1.44.19-1.58-.08-.14-.3-.22-.63-.39z"/></svg>
+    <span data-i18n="waFab">Need help choosing?</span>
+  </button>
+
+  <div class="modal-scrim" id="quickView">
+    <div class="modal-box" id="modalBox"></div>
+  </div>
+
+  <div id="toast"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   CONFIG — placeholders the store owner sets before launch.
+   ========================================================= */
+var CONFIG = {
+  WHATSAPP_NUMBER: "97400000000", // TODO: replace with real Qatar WhatsApp number (no + or spaces)
+  CURRENCY: "QAR"
+};
+
+/* =========================================================
+   ICONS — inline SVG paths reused across product tiles
+   ========================================================= */
+var ICONS = {
+  balloon:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.6 2 4.5 5.7 4.5 9.8c0 3.4 2.2 6.2 5 7.3l-.5 2.4a1 1 0 0 0 1 1.2h4a1 1 0 0 0 1-1.2l-.5-2.4c2.8-1.1 5-3.9 5-7.3C19.5 5.7 16.4 2 12 2z" opacity=".95"/><path d="M11 20.7h2v1.3a1 1 0 0 1-2 0z"/></svg>',
+  garland:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6c4 6 6 6 10 0s6-6 10 0" stroke-linecap="round"/><circle cx="5" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="10" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="9" r="1.6" fill="currentColor" stroke="none"/></svg>',
+  backdrop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 21h18M8 17v4M16 17v4" stroke-linecap="round"/></svg>',
+  baby:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" stroke-linecap="round"/></svg>',
+  topper:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4z"/><path d="M4 21c2-1.5 5-2 8-2s6 .5 8 2"/></svg>',
+  gift:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="9" width="18" height="11" rx="1.4"/><path d="M3 13h18M12 9v11"/><path d="M12 9C9 9 8 7 8 5.5A2.5 2.5 0 0 1 12 4a2.5 2.5 0 0 1 4 1.5C16 7 15 9 12 9z"/></svg>',
+  lantern:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6M12 3v3"/><path d="M7 8c0-1.7 2.2-3 5-3s5 1.3 5 3-2.2 3-5 3-5-1.3-5-3z"/><path d="M7 8v8c0 1.7 2.2 3 5 3s5-1.3 5-3V8"/><path d="M12 21v-2"/></svg>',
+  cap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 9l10-4 10 4-10 4-10-4z"/><path d="M6 11v5c0 1.5 2.8 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6" stroke-linecap="round"/></svg>',
+  bunting:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5c5 4 15 4 20 0" stroke-linecap="round"/><path d="M6 6l2 5 2-5M13 6l2 5 2-5" fill="currentColor" stroke="none"/></svg>',
+  arch:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21V11a8 8 0 0 1 16 0v10"/><circle cx="7" cy="9" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="5" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="9" r="1.4" fill="currentColor" stroke="none"/></svg>',
+  plate:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
+  moonicon:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A9 9 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>',
+  crown:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 18h18l-1.4-8-4.6 4-3-6-3 6-4.6-4z"/><path d="M5 20h14"/></svg>'
+};
+
+/* =========================================================
+   DATA
+   ========================================================= */
+var CATS = [
+  {id:"balloons", en:"Balloons", ar:"بالونات", icon:"balloon"},
+  {id:"decor", en:"Decorations", ar:"ديكورات", icon:"garland"},
+  {id:"essentials", en:"Party Supplies", ar:"مستلزمات الحفلات", icon:"plate"},
+  {id:"cake", en:"Cake Accessories", ar:"إكسسوارات الكيك", icon:"topper"},
+  {id:"gifts", en:"Gifts", ar:"هدايا", icon:"gift"},
+  {id:"favors", en:"Party Favors", ar:"هدايا الضيوف", icon:"bunting"},
+  {id:"personalized", en:"Personalized", ar:"مخصص", icon:"cap"}
+];
+
+var OCCASIONS = [
+  {id:"birthday", emoji:"🎂", en:"Birthday", ar:"عيد ميلاد"},
+  {id:"baby", emoji:"👶", en:"Baby Celebration", ar:"احتفال المولود"},
+  {id:"graduation", emoji:"🎓", en:"Graduation", ar:"التخرج"},
+  {id:"engagement", emoji:"💍", en:"Engagement", ar:"الخطوبة"},
+  {id:"wedding", emoji:"💐", en:"Wedding", ar:"الزفاف"},
+  {id:"party", emoji:"🎉", en:"Party", ar:"حفلة"},
+  {id:"ramadan", emoji:"🌙", en:"Ramadan & Eid", ar:"رمضان والعيد"},
+  {id:"qatar", emoji:"🇶🇦", en:"Qatar Celebrations", ar:"احتفالات قطر"}
+];
+
+var PRODUCTS = [
+  {id:1,en:"Moonlit Number Balloon Bouquet",ar:"باقة بالونات الأرقام المقمرة",price:149,sale:129,cat:"balloons",occ:["birthday","party"],icon:"balloon",tone:"purple",rating:4.8,stock:"in"},
+  {id:2,en:"Twilight Garden Balloon Garland",ar:"إكليل بالونات الحديقة الأرجوانية",price:219,cat:"decor",occ:["birthday","wedding","party"],icon:"garland",tone:"blue",rating:4.9,stock:"in"},
+  {id:3,en:"Royal Purple & Silver Backdrop",ar:"خلفية أرجوانية وفضية ملكية",price:179,cat:"decor",occ:["birthday","engagement","party"],icon:"backdrop",tone:"purple",rating:4.7,stock:"low"},
+  {id:4,en:"Little Star Baby Shower Bundle",ar:"مجموعة استقبال المولود - نجمة صغيرة",price:259,sale:219,cat:"decor",occ:["baby"],icon:"baby",tone:"sky",rating:5,stock:"in"},
+  {id:5,en:"Crescent Cake Topper — Gold",ar:"طقم كيك الهلال الذهبي",price:39,cat:"cake",occ:["birthday","engagement","wedding"],icon:"topper",tone:"gold",rating:4.6,stock:"in"},
+  {id:6,en:"Starlit Gift Box Set",ar:"طقم صناديق هدايا النجوم",price:89,cat:"gifts",occ:["birthday","wedding","baby"],icon:"gift",tone:"lavender",rating:4.8,stock:"in"},
+  {id:7,en:"Sapphire Blue Balloon Bouquet",ar:"باقة بالونات زرقاء ياقوتية",price:99,cat:"balloons",occ:["birthday","party","qatar"],icon:"balloon",tone:"blue",rating:4.7,stock:"in"},
+  {id:8,en:"Ramadan Lantern Moon Garland",ar:"إكليل فوانيس رمضان القمرية",price:149,cat:"decor",occ:["ramadan"],icon:"lantern",tone:"gold",rating:4.9,stock:"in"},
+  {id:9,en:"Graduation Cap Balloon Bouquet",ar:"باقة بالونات قبعة التخرج",price:119,cat:"balloons",occ:["graduation"],icon:"cap",tone:"blue",rating:4.6,stock:"in"},
+  {id:10,en:"Qatar National Day Bunting Set",ar:"طقم أعلام اليوم الوطني القطري",price:79,cat:"decor",occ:["qatar"],icon:"bunting",tone:"purple",rating:4.8,stock:"low"},
+  {id:11,en:"Engagement Rose Arch Kit",ar:"طقم قوس الخطوبة الوردي",price:349,cat:"decor",occ:["engagement","wedding"],icon:"arch",tone:"lavender",rating:4.9,stock:"in"},
+  {id:12,en:"Golden Hour Charger Plates (x10)",ar:"أطباق تقديم الساعة الذهبية (10 قطع)",price:59,cat:"essentials",occ:["wedding","party","engagement"],icon:"plate",tone:"gold",rating:4.5,stock:"in"},
+
+  /* Birthday assortment — same items & prices as the Qatar benchmark collection */
+  {id:13,en:"Unicorn Balloon Decoration Set – All in One",ar:"طقم ديكور بالونات يونيكورن الشامل",price:160,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.7,stock:"in"},
+  {id:14,en:"Navy Blue Chrome Metallic Gold & Silver Birthday Decoration",ar:"ديكور عيد ميلاد كحلي وذهبي وفضي معدني",price:90,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"blue",rating:4.6,stock:"in"},
+  {id:15,en:"Football Soccer Balloons (Set)",ar:"بالونات كرة القدم (طقم)",price:20,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"sky",rating:4.5,stock:"in"},
+  {id:16,en:"Birthday Princess Sash & Tiara",ar:"وشاح وتاج الأميرة لعيد الميلاد",price:35,cat:"essentials",occ:["birthday"],icon:"crown",tone:"lavender",rating:4.8,stock:"in"},
+  {id:17,en:"Birthday Gift Balloon Decoration",ar:"ديكور بالونات هدايا عيد الميلاد",price:45,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"gold",rating:4.6,stock:"in"},
+  {id:18,en:"Rosegold Balloon",ar:"بالون ذهبي وردي",price:65,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"purple",rating:4.7,stock:"in"},
+  {id:19,en:"Spiderman Birthday Balloons",ar:"بالونات الرجل العنكبوت لعيد الميلاد",price:65,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"blue",rating:4.8,stock:"in"},
+  {id:20,en:"Birthday Queen Crown Headband",ar:"إكسسوار رأس تاج الملكة لعيد الميلاد",price:25,cat:"essentials",occ:["birthday"],icon:"crown",tone:"sky",rating:4.6,stock:"low"},
+  {id:21,en:"Birthday Set – Rosegold Garland",ar:"طقم عيد ميلاد - إكليل ذهبي وردي",price:55,cat:"decor",occ:["birthday"],icon:"garland",tone:"lavender",rating:4.7,stock:"in"},
+  {id:22,en:"Black & Gold Birthday Decoration Set",ar:"طقم ديكور عيد ميلاد أسود وذهبي",price:105,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"gold",rating:4.8,stock:"in"},
+  {id:23,en:"Jungle Safari Theme Birthday Decorations Set",ar:"طقم ديكور حفلة عيد ميلاد بطابع سفاري الأدغال",price:125,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.7,stock:"in"},
+  {id:24,en:"Football Soccer Balloons (Single)",ar:"بالونات كرة القدم (فردي)",price:15,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"blue",rating:4.5,stock:"in"},
+  {id:25,en:"Football Birthday Decoration – Soccer",ar:"ديكور عيد ميلاد كرة القدم",price:65,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"sky",rating:4.6,stock:"in"},
+  {id:26,en:"Black Silver Birthday Set",ar:"طقم عيد ميلاد أسود وفضي",price:90,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"lavender",rating:4.7,stock:"in"},
+  {id:27,en:"Bluey Balloon Decorations",ar:"ديكور بالونات بلوي",price:45,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"gold",rating:4.8,stock:"in"},
+  {id:28,en:"Mermaid Decoration Kit",ar:"طقم ديكور حورية البحر",price:175,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.9,stock:"low"},
+  {id:29,en:"Black Gold Birthday Decorations",ar:"ديكورات عيد ميلاد أسود وذهبي",price:145,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"blue",rating:4.7,stock:"in"},
+  {id:30,en:"Blue Birthday Helium Filled Balloons",ar:"بالونات هيليوم زرقاء لعيد الميلاد",price:65,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"sky",rating:4.6,stock:"in"},
+  {id:31,en:"Spiderman Foil Balloon",ar:"بالون فويل الرجل العنكبوت",price:10,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"lavender",rating:4.5,stock:"in"},
+  {id:32,en:"Happy Birthday Headband – Gold",ar:"إكسسوار رأس ذهبي لعيد ميلاد سعيد",price:25,cat:"essentials",occ:["birthday"],icon:"crown",tone:"gold",rating:4.6,stock:"in"},
+  {id:33,en:"Joystick Game Controller Foil Balloon",ar:"بالون فويل ذراع تحكم الألعاب",price:10,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"purple",rating:4.5,stock:"in"},
+  {id:34,en:"Aeroplane Aircraft Balloon",ar:"بالون طائرة",price:10,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"blue",rating:4.5,stock:"in"},
+  {id:35,en:"Jungle Safari Happy Birthday Animal Garland",ar:"إكليل حيوانات سفاري الأدغال لعيد الميلاد",price:85,cat:"decor",occ:["birthday"],icon:"garland",tone:"sky",rating:4.7,stock:"in"},
+  {id:36,en:"Birthday Decoration Set",ar:"طقم ديكور عيد ميلاد",price:35,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"lavender",rating:4.5,stock:"in"},
+  {id:37,en:"Happy Birthday Blue Foil Letter Balloons",ar:"بالونات حروف فويل زرقاء عيد ميلاد سعيد",price:25,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"gold",rating:4.6,stock:"in"},
+  {id:38,en:"Rose Gold Decoration",ar:"ديكور ذهبي وردي",price:80,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.6,stock:"in"},
+  {id:39,en:"Rosegold Birthday Garland Kit",ar:"طقم إكليل ذهبي وردي لعيد الميلاد",price:125,cat:"decor",occ:["birthday"],icon:"garland",tone:"blue",rating:4.8,stock:"in"},
+  {id:40,en:"Princess Birthday DIY Kit",ar:"طقم تحضير ذاتي لعيد ميلاد الأميرة",price:135,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"sky",rating:4.7,stock:"low"},
+  {id:41,en:"Happy Birthday Dad Helium Bunch",ar:"باقة هيليوم عيد ميلاد سعيد للأب",price:50,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"lavender",rating:4.7,stock:"in"},
+  {id:42,en:"Black Silver Birthday Room Surprise Kit",ar:"طقم مفاجأة غرفة أسود وفضي لعيد الميلاد",price:140,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"gold",rating:4.8,stock:"in"},
+  {id:43,en:"Pink Silver Birthday Room Surprise Kit",ar:"طقم مفاجأة غرفة وردي وفضي لعيد الميلاد",price:140,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.8,stock:"in"},
+  {id:44,en:"Spiderman Helium Bunch",ar:"باقة هيليوم الرجل العنكبوت",price:65,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"blue",rating:4.7,stock:"in"},
+  {id:45,en:"Black Gold Decoration",ar:"ديكور أسود وذهبي",price:145,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"sky",rating:4.7,stock:"in"},
+  {id:46,en:"Sonic Birthday Decorations (Deluxe)",ar:"ديكورات سونيك لعيد الميلاد (ديلوكس)",price:75,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"lavender",rating:4.6,stock:"in"},
+  {id:47,en:"Construction Vehicle Balloon Set",ar:"طقم بالونات مركبات البناء",price:35,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"gold",rating:4.6,stock:"in"},
+  {id:48,en:"30th Birthday Decoration Set",ar:"طقم ديكور عيد الميلاد الثلاثين",price:85,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.7,stock:"in"},
+  {id:49,en:"Minecraft Birthday Decoration Kit",ar:"طقم ديكور ماينكرافت لعيد الميلاد",price:115,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"blue",rating:4.7,stock:"low"},
+  {id:50,en:"Rosegold Personalized Helium Bunch",ar:"باقة هيليوم ذهبية وردية مخصصة",price:145,cat:"personalized",occ:["birthday"],icon:"balloon",tone:"sky",rating:4.8,stock:"in"},
+  {id:51,en:"Spiderman Poster Decoration Set",ar:"طقم ديكور بوستر الرجل العنكبوت",price:150,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"lavender",rating:4.7,stock:"in"},
+  {id:52,en:"Sage Green Balloon Garland & Stand Kit",ar:"طقم إكليل وحامل بالونات أخضر سيج",price:60,cat:"decor",occ:["birthday"],icon:"garland",tone:"gold",rating:4.6,stock:"in"},
+  {id:53,en:"Silver Gold Decorations",ar:"ديكورات فضية وذهبية",price:135,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.7,stock:"in"},
+  {id:54,en:"Birthday Headband",ar:"إكسسوار رأس لعيد الميلاد",price:35,cat:"essentials",occ:["birthday"],icon:"crown",tone:"blue",rating:4.5,stock:"in"},
+  {id:55,en:"White Gold Helium Bunch",ar:"باقة هيليوم أبيض وذهبي",price:75,cat:"balloons",occ:["birthday"],icon:"balloon",tone:"sky",rating:4.6,stock:"in"},
+  {id:56,en:"Black Gold Decoration – Cheers",ar:"ديكور أسود وذهبي - نخب العمر",price:165,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"lavender",rating:4.8,stock:"in"},
+  {id:57,en:"Rosegold Birthday Set",ar:"طقم عيد ميلاد ذهبي وردي",price:180,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"gold",rating:4.9,stock:"low"},
+  {id:58,en:"Sonic Birthday Decorations (Basic)",ar:"ديكورات سونيك لعيد الميلاد (أساسي)",price:45,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"purple",rating:4.5,stock:"in"},
+  {id:59,en:"Birthday Princess Sash",ar:"وشاح الأميرة لعيد الميلاد",price:20,cat:"essentials",occ:["birthday"],icon:"crown",tone:"blue",rating:4.6,stock:"in"},
+  {id:60,en:"Birthday Decoration for Wife or Husband",ar:"ديكور عيد ميلاد للزوجة أو الزوج",price:45,cat:"decor",occ:["birthday"],icon:"backdrop",tone:"sky",rating:4.6,stock:"in"}
+];
+
+var TONES = {
+  purple:"linear-gradient(135deg,#5B2A86,#8a4fae)",
+  blue:"linear-gradient(135deg,#172B5B,#2867C7)",
+  sky:"linear-gradient(135deg,#2867C7,#9CC9F5)",
+  lavender:"linear-gradient(135deg,#7B4CAE,#B9A7E8)",
+  gold:"linear-gradient(135deg,#5B2A86,#D9C08C)"
+};
+
+var COLLECTIONS = [
+  {id:"c1",cls:"coll-1",en:"The Moonlight Collection",ar:"مجموعة ضوء القمر",den:"Elegant blue, silver and purple decorations.",dar:"ديكورات أنيقة باللون الأزرق والفضي والأرجواني.",tag:"decor"},
+  {id:"c2",cls:"coll-2",en:"Little Star Collection",ar:"مجموعة النجمة الصغيرة",den:"Baby and children's celebrations.",dar:"احتفالات الأطفال والمواليد.",tag:"baby"},
+  {id:"c3",cls:"coll-3",en:"Her Moment",ar:"لحظتها",den:"Feminine, pink and purple celebration pieces.",dar:"قطع احتفالية نسائية بألوان وردية وأرجوانية.",tag:"engagement"},
+  {id:"c4",cls:"coll-4",en:"His Moment",ar:"لحظته",den:"Blue and navy masculine celebration pieces.",dar:"قطع احتفالية بألوان زرقاء وكحلية.",tag:"graduation"},
+  {id:"c5",cls:"coll-5",en:"Golden Moments",ar:"لحظات ذهبية",den:"Premium gold, champagne and elegant decor.",dar:"ديكورات ذهبية وشمبانيا فاخرة.",tag:"wedding"},
+  {id:"c6",cls:"coll-6",en:"Qatar Collection",ar:"مجموعة قطر",den:"Qatar-inspired celebrations.",dar:"احتفالات مستوحاة من قطر.",tag:"qatar"},
+  {id:"c7",cls:"coll-7",en:"Ramadan Nights",ar:"ليالي رمضان",den:"Elegant moon, lantern and Ramadan decor.",dar:"ديكورات رمضانية أنيقة بالفوانيس والهلال.",tag:"ramadan"}
+];
+
+var PACKAGES = [
+  {id:"p1",en:"Moonlight Birthday",ar:"عيد ميلاد ضوء القمر",price:199,feature:false,budget:[150,300],items:[["Balloon bouquet & garland","باقة وإكليل بالونات"],["Backdrop with LOONAR styling","خلفية بتنسيق LOONAR"],["Cake topper & candles","زينة كيك وشموع"]]},
+  {id:"p2",en:"Little Star",ar:"النجمة الصغيرة",price:249,feature:false,budget:[200,400],items:[["Baby-safe pastel decor","ديكور آمن بألوان ناعمة"],["Number/age balloon","بالون رقم العمر"],["Personalized banner","لافتة مخصصة"]]},
+  {id:"p3",en:"Royal Night",ar:"الليلة الملكية",price:399,feature:true,budget:[300,600],items:[["Full backdrop + arch","خلفية كاملة + قوس"],["Premium balloon garland","إكليل بالونات فاخر"],["Table styling & charger plates","تنسيق طاولة وأطباق تقديم"],["Complimentary WhatsApp styling call","مكالمة تنسيق مجانية عبر واتساب"]]},
+  {id:"p4",en:"Complete Celebration",ar:"احتفال متكامل",price:599,feature:false,budget:[500,900],items:[["Everything in Royal Night","كل ما في الليلة الملكية"],["Gift favors for guests","هدايا للضيوف"],["Priority Qatar delivery slot","موعد توصيل قطر ذو أولوية"]]}
+];
+
+var TRUST = [
+  {en:"Fast Qatar Delivery",ar:"توصيل سريع داخل قطر",i:'<path d="M3 13h11V6H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/>'},
+  {en:"QAR Pricing",ar:"الأسعار بالريال القطري",i:'<circle cx="12" cy="12" r="9"/><path d="M9 9h4a2 2 0 0 1 0 4H9m0 0h5m-5-4v8"/>'},
+  {en:"Secure Checkout",ar:"دفع آمن",i:'<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>'},
+  {en:"WhatsApp Support",ar:"دعم عبر واتساب",i:'<path d="M4 20l1.4-4A8 8 0 1 1 9 19z"/>'},
+  {en:"Easy Ordering",ar:"طلب سهل",i:'<path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/>'}
+];
+
+/* =========================================================
+   TRANSLATIONS (interface chrome)
+   ========================================================= */
+var I18N = {
+  en:{
+    topbar:"✨ Fast Qatar Delivery · Secure Checkout · WhatsApp Ordering Available",
+    searchPh:"What are you celebrating?", closeSearch:"Close ✕",
+    yourCart:"Your Cart", yourWishlist:"Your Wishlist",
+    heroEyebrow:"LOONAR · QATAR", heroTitle:"Celebrate the Unseen Beauty of Every Moment.",
+    heroLead:"From little milestones to unforgettable celebrations, LOONAR brings beautiful moments to life with thoughtfully curated decorations, balloons and gifts.",
+    shopCelebrations:"Shop Celebrations", exploreCollections:"Explore Collections",
+    shopByOccasion:"Shop by Occasion", whatCelebrating:"What are you celebrating?",
+    shopByCategory:"Shop by Category", everyDetail:"Every detail of your celebration",
+    buildEyebrow:"Your Personal Celebration Stylist", buildTitle:"Build Your Celebration",
+    buildLead:"Tell us a little, and LOONAR will recommend the perfect package.",
+    curatedFor:"LOONAR Collections", curatedTitle:"Curated for every kind of moment",
+    featured:"Featured Products", featuredTitle:"Ready to bring the magic home",
+    packagesEyebrow:"Celebration Packages", packagesTitle:"Complete celebrations, beautifully bundled",
+    aboutEyebrow:"About LOONAR", aboutQuote:"“Just as the moon reveals different sides of its beauty throughout the night, life's most precious moments reveal themselves through the celebrations we create together.”",
+    aboutP1:"LOONAR was created to make those moments brighter — from the smallest surprise to the biggest celebration.",
+    aboutP2:"Because every moment has a beauty worth discovering.", aboutSig:"— The LOONAR Studio, Doha",
+    nlTitle:"Be the first to discover our new collections", nlPh:"Enter your email", nlBtn:"Join LOONAR",
+    footerTag:"Celebrate the Unseen Beauty of Every Moment.",
+    fShop:"Shop", fCelebrate:"Celebrations", fCompany:"Company", fHelp:"Help",
+    rights:"All rights reserved.", madeFor:"Made for Qatar 🇶🇦 · QAR ر.ق",
+    waFab:"Need help choosing?", addToCart:"Add to Cart", quickView:"Quick View",
+    all:"All", inStock:"In Stock", lowStock:"Only a few left",
+    step1:"1. Occasion", step2:"2. Color Theme", step3:"3. Milestone", step4:"4. Guests", step5:"5. Budget (QAR)",
+    recommended:"Recommended Package", noResult:"Pick an option in every step to see your recommendation.",
+    subtotal:"Subtotal", delivery:"Delivery", total:"Total", couponPh:"Coupon code", apply:"Apply",
+    checkoutWa:"Checkout via WhatsApp", payCard:"Pay by Card", payDisabled:"Payment gateway coming soon",
+    emptyCart:"Your cart is a blank canvas. Time to add some sparkle.", emptyWish:"Nothing saved yet — tap the heart on any product.",
+    couponOk:"10% off applied — LOONAR10", couponErr:"That code isn't valid.",
+    nlHonest:"Thanks! Email capture will go live once connected to a mail provider.", nlInvalid:"Please enter a valid email address.",
+    deliveryStd:"Standard Qatar Delivery (2–4 days)", deliveryExp:"Express Delivery (same/next day)",
+    buyNow:"Buy Now", wishlistLbl:"Wishlist", share:"Share", related:"Complete the Look", qty:"Qty",
+    stockLbl:"Availability"
+  },
+  ar:{
+    topbar:"✨ توصيل سريع داخل قطر · دفع آمن · الطلب متاح عبر واتساب",
+    searchPh:"ما الذي تحتفلون به؟", closeSearch:"إغلاق ✕",
+    yourCart:"سلة التسوق", yourWishlist:"المفضلة",
+    heroEyebrow:"لونار · قطر", heroTitle:"احتفل بالجمال الخفي في كل لحظة.",
+    heroLead:"من أبسط اللحظات إلى أجمل الاحتفالات، تصنع لونار لحظات لا تُنسى بديكورات وبالونات وهدايا مختارة بعناية.",
+    shopCelebrations:"تسوّق الاحتفالات", exploreCollections:"استكشف المجموعات",
+    shopByOccasion:"تسوّق حسب المناسبة", whatCelebrating:"ما الذي تحتفلون به؟",
+    shopByCategory:"تسوّق حسب الفئة", everyDetail:"كل تفصيل في احتفالكم",
+    buildEyebrow:"مصمم احتفالكم الشخصي", buildTitle:"صمّم احتفالك",
+    buildLead:"أخبرونا قليلاً، وستوصي لونار بالباقة المثالية لكم.",
+    curatedFor:"مجموعات لونار", curatedTitle:"مختارة لكل نوع من اللحظات",
+    featured:"منتجات مميزة", featuredTitle:"جاهزون لإضفاء السحر على منزلكم",
+    packagesEyebrow:"باقات الاحتفال", packagesTitle:"احتفالات متكاملة بتنسيق أنيق",
+    aboutEyebrow:"عن لونار", aboutQuote:"«مثلما يكشف القمر عن أوجه جماله المختلفة طوال الليل، تكشف أجمل لحظات الحياة عن نفسها في الاحتفالات التي نصنعها معاً.»",
+    aboutP1:"وُلدت لونار لتجعل تلك اللحظات أكثر إشراقًا — من أبسط مفاجأة إلى أعظم احتفال.",
+    aboutP2:"لأن لكل لحظة جمالًا يستحق أن يُكتشف.", aboutSig:"— استوديو لونار، الدوحة",
+    nlTitle:"كونوا أول من يكتشف مجموعاتنا الجديدة", nlPh:"أدخل بريدكم الإلكتروني", nlBtn:"انضم إلى لونار",
+    footerTag:"احتفل بالجمال الخفي في كل لحظة.",
+    fShop:"تسوّق", fCelebrate:"المناسبات", fCompany:"الشركة", fHelp:"المساعدة",
+    rights:"جميع الحقوق محفوظة.", madeFor:"صُنعت لقطر 🇶🇦 · ر.ق QAR",
+    waFab:"بحاجة للمساعدة في الاختيار؟", addToCart:"أضف للسلة", quickView:"عرض سريع",
+    all:"الكل", inStock:"متوفر", lowStock:"كمية محدودة",
+    step1:"١. المناسبة", step2:"٢. نظام الألوان", step3:"٣. السن / المناسبة", step4:"٤. عدد الضيوف", step5:"٥. الميزانية (ر.ق)",
+    recommended:"الباقة الموصى بها", noResult:"اختر خيارًا في كل خطوة لرؤية التوصية.",
+    subtotal:"المجموع الفرعي", delivery:"التوصيل", total:"الإجمالي", couponPh:"رمز الخصم", apply:"تطبيق",
+    checkoutWa:"إتمام الطلب عبر واتساب", payCard:"الدفع بالبطاقة", payDisabled:"بوابة الدفع قريبًا",
+    emptyCart:"سلتكم فارغة حاليًا. حان وقت إضافة بعض البريق.", emptyWish:"لا يوجد شيء محفوظ بعد — اضغطوا على القلب في أي منتج.",
+    couponOk:"تم تطبيق خصم ١٠٪ — LOONAR10", couponErr:"هذا الرمز غير صالح.",
+    nlHonest:"شكرًا لكم! سيتم تفعيل الاشتراك عند ربطه بمزود بريد إلكتروني.", nlInvalid:"يرجى إدخال بريد إلكتروني صحيح.",
+    deliveryStd:"توصيل قطر العادي (٢-٤ أيام)", deliveryExp:"توصيل سريع (نفس اليوم/اليوم التالي)",
+    buyNow:"اشترِ الآن", wishlistLbl:"المفضلة", share:"مشاركة", related:"أكمل الإطلالة", qty:"الكمية",
+    stockLbl:"التوفر"
+  }
+};
+
+var NAV = {
+  shop:{en:"SHOP",ar:"تسوّق",cols:[
+    {h:{en:"Shop",ar:"تسوّق"},items:[{en:"All Products",ar:"جميع المنتجات"},{en:"New Arrivals",ar:"وصل حديثًا"},{en:"Best Sellers",ar:"الأكثر مبيعًا"},{en:"Offers",ar:"العروض"}]}
+  ]},
+  celebrate:{en:"CELEBRATE",ar:"المناسبات",cols:[
+    {h:{en:"Celebrate",ar:"المناسبات"},items:[{en:"Birthdays",ar:"أعياد الميلاد"},{en:"Baby Shower",ar:"استقبال المولود"},{en:"Gender Reveal",ar:"كشف الجنس"},{en:"Welcome Baby",ar:"مرحبا بالمولود"}]},
+    {h:{en:"&nbsp;",ar:"&nbsp;"},items:[{en:"Graduation",ar:"التخرج"},{en:"Engagement",ar:"الخطوبة"},{en:"Wedding",ar:"الزفاف"},{en:"Bridal Shower",ar:"حفلة العروس"}]},
+    {h:{en:"&nbsp;",ar:"&nbsp;"},items:[{en:"Anniversary",ar:"الذكرى السنوية"},{en:"Farewell",ar:"الوداع"},{en:"Welcome Home",ar:"الترحيب بالعودة"},{en:"New Beginnings",ar:"بدايات جديدة"}]}
+  ]},
+  balloons:{en:"BALLOONS",ar:"بالونات",cols:[
+    {h:{en:"Balloons",ar:"بالونات"},items:[{en:"Helium Balloons",ar:"بالونات الهيليوم"},{en:"Balloon Bouquets",ar:"باقات البالونات"},{en:"Number Balloons",ar:"بالونات الأرقام"}]},
+    {h:{en:"&nbsp;",ar:"&nbsp;"},items:[{en:"Letter Balloons",ar:"بالونات الحروف"},{en:"Personalized Balloons",ar:"بالونات مخصصة"},{en:"Balloon Garlands",ar:"إكاليل البالونات"}]}
+  ]},
+  decor:{en:"DECORATIONS",ar:"ديكورات",cols:[
+    {h:{en:"Decorations",ar:"ديكورات"},items:[{en:"Backdrops",ar:"خلفيات"},{en:"Banners",ar:"لافتات"},{en:"Table Decorations",ar:"زينة الطاولة"}]},
+    {h:{en:"&nbsp;",ar:"&nbsp;"},items:[{en:"Hanging Decorations",ar:"زينة معلقة"},{en:"Lights",ar:"إضاءة"},{en:"Party Sets",ar:"طقم حفلات"}]}
+  ]},
+  essentials:{en:"PARTY ESSENTIALS",ar:"مستلزمات الحفلات",cols:[
+    {h:{en:"Essentials",ar:"مستلزمات"},items:[{en:"Plates & Cups",ar:"أطباق وأكواب"},{en:"Table Covers",ar:"أغطية طاولات"},{en:"Cake Toppers",ar:"زينة الكيك"}]},
+    {h:{en:"&nbsp;",ar:"&nbsp;"},items:[{en:"Candles",ar:"شموع"},{en:"Sashes & Hats",ar:"أوشحة وقبعات"},{en:"Disposable Partyware",ar:"أدوات حفلات يمكن التخلص منها"}]}
+  ]},
+  gifts:{en:"GIFTS",ar:"هدايا",cols:[
+    {h:{en:"Gifts",ar:"هدايا"},items:[{en:"Gift Boxes",ar:"صناديق هدايا"},{en:"Party Favors",ar:"هدايا الضيوف"},{en:"Return Gifts",ar:"هدايا الشكر"},{en:"Personalized Gifts",ar:"هدايا مخصصة"}]}
+  ]}
+};
+
+/* =========================================================
+   STATE
+   ========================================================= */
+var State = JSON.parse(localStorage.getItem("loonar_state") || "null") || {lang:"en", cart:[], wish:[]};
+function saveState(){ localStorage.setItem("loonar_state", JSON.stringify(State)); }
+
+function money(n){
+  return (State.lang==="ar" ? n.toLocaleString("ar-EG") : n.toLocaleString("en-US")) + " " + CONFIG.CURRENCY;
+}
+function t(key){ return (I18N[State.lang] && I18N[State.lang][key]) || I18N.en[key] || key; }
+function pname(p){ return State.lang==="ar" ? p.ar : p.en; }
+
+function toast(msg){
+  var el = document.getElementById("toast");
+  el.textContent = msg; el.classList.add("show");
+  clearTimeout(toast._tm);
+  toast._tm = setTimeout(function(){ el.classList.remove("show"); }, 2200);
+}
+
+/* =========================================================
+   RENDER: NAV
+   ========================================================= */
+function renderNav(){
+  var ul = document.getElementById("navList");
+  var html = "";
+  Object.keys(NAV).forEach(function(key){
+    var m = NAV[key];
+    html += '<li data-menu="'+key+'">'+
+      '<button class="top-link" type="button">'+(State.lang==="ar"?m.ar:m.en)+'</button>'+
+      '<div class="mega">'+ m.cols.map(function(col){
+        return '<div class="mega-col"><h5>'+(State.lang==="ar"?col.h.ar:col.h.en)+'</h5><ul>'+
+          col.items.map(function(it){ return '<li><a href="#shop" data-occ-jump>'+(State.lang==="ar"?it.ar:it.en)+'</a></li>'; }).join("")+
+          '</ul></div>';
+      }).join("") + '</div></li>';
+  });
+  html += '<li><a href="#collections">'+(State.lang==="ar"?"مجموعة قطر":"QATAR COLLECTION")+'</a></li>';
+  ul.innerHTML = html;
+
+  ul.querySelectorAll("li[data-menu]").forEach(function(li){
+    var btn = li.querySelector(".top-link");
+    btn.addEventListener("click", function(){
+      var wasOpen = li.classList.contains("open");
+      ul.querySelectorAll("li.open").forEach(function(x){ x.classList.remove("open"); });
+      if(!wasOpen) li.classList.add("open");
+    });
+  });
+  document.addEventListener("click", function(e){
+    if(!e.target.closest(".main-nav > ul > li")){
+      ul.querySelectorAll("li.open").forEach(function(x){ x.classList.remove("open"); });
+    }
+  });
+}
+
+/* =========================================================
+   RENDER: TRUST BAR
+   ========================================================= */
+function renderTrust(){
+  document.getElementById("trustRow").innerHTML = TRUST.map(function(it){
+    return '<div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+it.i+'</svg>'+(State.lang==="ar"?it.ar:it.en)+'</div>';
+  }).join("");
+}
+
+/* =========================================================
+   RENDER: OCCASIONS / CATEGORIES
+   ========================================================= */
+function renderOccasions(){
+  document.getElementById("occGrid").innerHTML = OCCASIONS.map(function(o){
+    return '<button class="occ-card" data-occ="'+o.id+'" type="button"><span class="emoji">'+o.emoji+'</span><span class="label">'+(State.lang==="ar"?o.ar:o.en)+'</span></button>';
+  }).join("");
+  document.querySelectorAll("[data-occ]").forEach(function(b){
+    b.addEventListener("click", function(){ jumpToShop({occ:b.getAttribute("data-occ")}); });
+  });
+}
+function renderCategories(){
+  document.getElementById("catGrid").innerHTML = CATS.map(function(c){
+    return '<button class="cat-card" data-cat="'+c.id+'" type="button"><span class="icon-wrap">'+ICONS[c.icon]+'</span><span>'+(State.lang==="ar"?c.ar:c.en)+'</span></button>';
+  }).join("");
+  document.querySelectorAll("[data-cat]").forEach(function(b){
+    b.addEventListener("click", function(){ jumpToShop({cat:b.getAttribute("data-cat")}); });
+  });
+}
+
+/* =========================================================
+   RENDER: COLLECTIONS
+   ========================================================= */
+function renderCollections(){
+  document.getElementById("collGrid").innerHTML = COLLECTIONS.map(function(c){
+    return '<button class="coll-card '+c.cls+'" data-occtag="'+c.tag+'" type="button">'+
+      '<h3>'+(State.lang==="ar"?c.ar:c.en)+'</h3><p>'+(State.lang==="ar"?c.dar:c.den)+'</p>'+
+      '<span class="coll-cta">'+(State.lang==="ar"?"تسوّق المجموعة →":"Shop the Collection →")+'</span></button>';
+  }).join("");
+  document.querySelectorAll("[data-occtag]").forEach(function(b){
+    b.addEventListener("click", function(){ jumpToShop({occ:b.getAttribute("data-occtag")}); });
+  });
+}
+
+/* =========================================================
+   RENDER: PACKAGES
+   ========================================================= */
+function renderPackages(){
+  document.getElementById("pkgGrid").innerHTML = PACKAGES.map(function(p){
+    return '<div class="pkg-card'+(p.feature?' feature':'')+'">'+
+      '<div><div class="pkg-from">'+(State.lang==="ar"?"يبدأ من":"Starting from")+'</div>'+
+      '<div class="pkg-name">'+(State.lang==="ar"?p.ar:p.en)+'</div>'+
+      '<div class="pkg-price">'+money(p.price)+'</div></div>'+
+      '<ul class="pkg-list">'+p.items.map(function(it){ return '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5 11-11"/></svg>'+(State.lang==="ar"?it[1]:it[0])+'</li>'; }).join("")+'</ul>'+
+      '<button class="btn '+(p.feature?'btn-gold':'btn-ghost')+'" data-pkg-add="'+p.id+'">'+(State.lang==="ar"?"أضف الباقة للسلة":"Add Package to Cart")+'</button>'+
+      '</div>';
+  }).join("");
+  document.querySelectorAll("[data-pkg-add]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var pkg = PACKAGES.find(function(p){ return p.id === b.getAttribute("data-pkg-add"); });
+      addToCart({id:"pkg-"+pkg.id, en:pkg.en, ar:pkg.ar, price:pkg.price, icon:"gift", tone:"gold", isPackage:true}, 1);
+    });
+  });
+}
+
+/* =========================================================
+   RENDER: FOOTER
+   ========================================================= */
+function renderFooter(){
+  var shop = [["All Products","جميع المنتجات"],["New Arrivals","وصل حديثًا"],["Best Sellers","الأكثر مبيعًا"],["Offers","العروض"]];
+  var cel = [["Birthdays","أعياد الميلاد"],["Baby Shower","استقبال المولود"],["Wedding","الزفاف"],["Qatar Collection","مجموعة قطر"]];
+  var comp = [["About Us","من نحن"],["Contact","تواصل معنا"],["FAQ","الأسئلة الشائعة"],["Careers","الوظائف"]];
+  var help = [["Shipping","الشحن"],["Returns","الإرجاع"],["Privacy Policy","سياسة الخصوصية"],["Terms of Service","الشروط والأحكام"]];
+  function list(arr){ return arr.map(function(x){ return '<li><a href="#">'+(State.lang==="ar"?x[1]:x[0])+'</a></li>'; }).join(""); }
+  document.getElementById("fShopList").innerHTML = list(shop);
+  document.getElementById("fCelebrateList").innerHTML = list(cel);
+  document.getElementById("fCompanyList").innerHTML = list(comp);
+  document.getElementById("fHelpList").innerHTML = list(help);
+
+  var socials = [
+    {n:"Instagram",p:'<path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/>'},
+    {n:"Facebook",p:'<path d="M15 3h-2a5 5 0 0 0-5 5v2H6v4h2v7h4v-7h3l1-4h-4V8a1 1 0 0 1 1-1h3z"/>'},
+    {n:"TikTok",p:'<path d="M14 3v11a3.5 3.5 0 1 1-2.5-3.36V7.4A6.5 6.5 0 1 0 17 13.9V8.6a6 6 0 0 0 3 .8V6.3A4.3 4.3 0 0 1 17 3z"/>'},
+    {n:"WhatsApp",p:'<path d="M4 20l1.4-4A8 8 0 1 1 9 19z"/>'}
+  ];
+  document.getElementById("footerSocial").innerHTML = socials.map(function(s){
+    return '<a href="#" aria-label="'+s.n+'" title="'+s.n+' (configure link)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">'+s.p+'</svg></a>';
+  }).join("");
+  document.getElementById("year").textContent = new Date().getFullYear();
+}
+
+/* =========================================================
+   PRODUCT CARD / GRID / FILTERS
+   ========================================================= */
+var activeFilter = {type:"all", value:null};
+
+function productMediaSvg(p){
+  return '<div class="pmedia" style="background:'+TONES[p.tone]+'">'+ICONS[p.icon]+'</div>';
+}
+
+function buildCard(p){
+  var wished = State.wish.indexOf(p.id) > -1;
+  var priceHtml = p.sale
+    ? '<span class="now">'+money(p.sale)+'</span><span class="was">'+money(p.price)+'</span>'
+    : '<span class="now">'+money(p.price)+'</span>';
+  return '<div class="pcard" data-pid="'+p.id+'">'+
+    '<div class="pmedia" style="background:'+TONES[p.tone]+'">'+
+      (p.sale?'<span class="ptag">'+(State.lang==="ar"?"تخفيض":"Sale")+'</span>':'')+
+      '<button class="pwish'+(wished?' active':'')+'" data-wish="'+p.id+'" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.6 8 2 4.5 5.6 4a5 5 0 0 1 6.4 2.3A5 5 0 0 1 18.4 4C22 4.5 23.4 8 22 11.7 19.5 16.4 12 21 12 21z"/></svg></button>'+
+      ICONS[p.icon]+
+      '<button class="pquick" data-quick="'+p.id+'">'+t("quickView")+'</button>'+
+    '</div>'+
+    '<div class="pbody">'+
+      '<div class="pname">'+pname(p)+'</div>'+
+      '<div class="prating"><span class="stars-ico">'+"★★★★★".slice(0,Math.round(p.rating))+"☆☆☆☆☆".slice(0,5-Math.round(p.rating))+'</span>'+p.rating+'</div>'+
+      '<div class="pstock '+(p.stock==="low"?"low":"in")+'">'+(p.stock==="low"?t("lowStock"):t("inStock"))+'</div>'+
+      '<div class="pprice">'+priceHtml+'</div>'+
+      '<div class="pactions"><button class="btn btn-primary" data-add="'+p.id+'">'+t("addToCart")+'</button></div>'+
+    '</div></div>';
+}
+
+function renderFilters(){
+  var chips = [{type:"all",value:null,label:t("all")}].concat(
+    CATS.map(function(c){ return {type:"cat",value:c.id,label:State.lang==="ar"?c.ar:c.en}; })
+  );
+  document.getElementById("filterRow").innerHTML = chips.map(function(c){
+    var active = activeFilter.type===c.type && activeFilter.value===c.value;
+    return '<button class="chip'+(active?' active':'')+'" data-filter-type="'+c.type+'" data-filter-value="'+(c.value||'')+'">'+c.label+'</button>';
+  }).join("");
+  document.querySelectorAll("[data-filter-type]").forEach(function(b){
+    b.addEventListener("click", function(){
+      activeFilter = {type:b.getAttribute("data-filter-type"), value:b.getAttribute("data-filter-value")||null};
+      renderFilters(); renderProducts();
+    });
+  });
+}
+
+function renderProducts(){
+  var list = PRODUCTS.filter(function(p){
+    if(activeFilter.type==="all") return true;
+    if(activeFilter.type==="cat") return p.cat===activeFilter.value;
+    if(activeFilter.type==="occ") return p.occ.indexOf(activeFilter.value) > -1;
+    return true;
+  });
+  document.getElementById("productGrid").innerHTML = list.map(buildCard).join("") ||
+    '<p style="grid-column:1/-1;text-align:center;color:var(--ink-faint)">'+t("noResult")+'</p>';
+  bindProductEvents(document.getElementById("productGrid"));
+}
+
+function jumpToShop(filter){
+  activeFilter = filter.cat ? {type:"cat",value:filter.cat} : {type:"occ",value:filter.occ};
+  renderFilters(); renderProducts();
+  document.getElementById("shop").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function bindProductEvents(root){
+  root.querySelectorAll("[data-add]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var p = PRODUCTS.find(function(x){ return x.id === +b.getAttribute("data-add"); });
+      addToCart(p, 1);
+    });
+  });
+  root.querySelectorAll("[data-wish]").forEach(function(b){
+    b.addEventListener("click", function(){ toggleWish(+b.getAttribute("data-wish")); });
+  });
+  root.querySelectorAll("[data-quick]").forEach(function(b){
+    b.addEventListener("click", function(){ openQuickView(+b.getAttribute("data-quick")); });
+  });
+}
+
+/* =========================================================
+   CART / WISHLIST LOGIC
+   ========================================================= */
+function findProductAny(id){
+  var p = PRODUCTS.find(function(x){ return x.id === id; });
+  if(p) return p;
+  var pkg = PACKAGES.find(function(x){ return "pkg-"+x.id === id; });
+  if(pkg) return {id:"pkg-"+pkg.id, en:pkg.en, ar:pkg.ar, price:pkg.price, icon:"gift", tone:"gold"};
+  return null;
+}
+
+function addToCart(p, qty){
+  var line = State.cart.find(function(l){ return l.id === p.id; });
+  if(line){ line.qty += qty; }
+  else { State.cart.push({id:p.id, qty:qty, price: p.sale || p.price, en:p.en, ar:p.ar, icon:p.icon, tone:p.tone}); }
+  saveState(); updateCounts(); renderCartDrawer();
+  toast((State.lang==="ar"?"أُضيف: ":"Added: ") + (State.lang==="ar"?p.ar:p.en));
+}
+function changeQty(id, delta){
+  var line = State.cart.find(function(l){ return l.id === id; });
+  if(!line) return;
+  line.qty += delta;
+  if(line.qty <= 0) State.cart = State.cart.filter(function(l){ return l.id !== id; });
+  saveState(); updateCounts(); renderCartDrawer();
+}
+function removeLine(id){
+  State.cart = State.cart.filter(function(l){ return l.id !== id; });
+  saveState(); updateCounts(); renderCartDrawer();
+}
+function toggleWish(id){
+  var i = State.wish.indexOf(id);
+  if(i>-1) State.wish.splice(i,1); else State.wish.push(id);
+  saveState(); updateCounts(); renderProducts(); renderWishDrawer();
+}
+function updateCounts(){
+  document.getElementById("cartCount").textContent = State.cart.reduce(function(s,l){ return s+l.qty; },0);
+  document.getElementById("wishCount").textContent = State.wish.length;
+}
+
+var couponApplied = false;
+var deliveryFee = 15;
+
+function renderCartDrawer(){
+  var body = document.getElementById("cartBody");
+  if(State.cart.length===0){
+    body.innerHTML = '<div class="drawer-empty">'+t("emptyCart")+'</div>';
+  } else {
+    body.innerHTML = State.cart.map(function(l){
+      return '<div class="line-item">'+
+        '<div class="line-thumb" style="background:'+TONES[l.tone||'purple']+';display:flex;align-items:center;justify-content:center;color:#fff">'+(ICONS[l.icon]||ICONS.gift)+'</div>'+
+        '<div class="line-info"><div class="name">'+(State.lang==="ar"?l.ar:l.en)+'</div>'+
+        '<div class="meta">'+money(l.price)+'</div>'+
+        '<div class="line-controls"><div class="qty-ctrl"><button data-qty-dec="'+l.id+'">-</button><span>'+l.qty+'</span><button data-qty-inc="'+l.id+'">+</button></div>'+
+        '<button class="line-remove" data-remove="'+l.id+'">'+(State.lang==="ar"?"إزالة":"Remove")+'</button></div></div>'+
+        '<div class="line-price">'+money(l.price*l.qty)+'</div></div>';
+    }).join("");
+  }
+  var subtotal = State.cart.reduce(function(s,l){ return s + l.price*l.qty; },0);
+  var discount = couponApplied ? Math.round(subtotal*0.1) : 0;
+  var delivery = subtotal>0 ? deliveryFee : 0;
+  var total = subtotal - discount + delivery;
+
+  document.getElementById("cartFoot").innerHTML =
+    '<div class="coupon-row"><input id="couponInput" type="text" placeholder="'+t("couponPh")+'"><button class="btn btn-ghost btn-sm" id="couponBtn">'+t("apply")+'</button></div>'+
+    '<div class="coupon-msg" id="couponMsg"></div>'+
+    '<select class="select-field" id="deliverySelect"><option value="15">'+t("deliveryStd")+' — '+money(15)+'</option><option value="35">'+t("deliveryExp")+' — '+money(35)+'</option></select>'+
+    '<div class="totals-row"><span>'+t("subtotal")+'</span><span>'+money(subtotal)+'</span></div>'+
+    (discount>0?'<div class="totals-row"><span>'+(State.lang==="ar"?"الخصم":"Discount")+'</span><span>-'+money(discount)+'</span></div>':'')+
+    '<div class="totals-row"><span>'+t("delivery")+'</span><span>'+money(delivery)+'</span></div>'+
+    '<div class="totals-row grand"><span>'+t("total")+'</span><span>'+money(total)+'</span></div>'+
+    '<button class="btn btn-primary" id="waCheckout" '+(State.cart.length===0?'disabled':'')+'>'+t("checkoutWa")+'</button>'+
+    '<button class="btn btn-ghost" disabled title="'+t("payDisabled")+'">'+t("payCard")+' — '+t("payDisabled")+'</button>'+
+    '<p class="foot-note">'+(State.lang==="ar"?"سيتم تفعيل بوابة الدفع وأسعار التوصيل الفعلية عند الربط مع مزود الدفع والشحن.":"Card payments and live delivery pricing activate once connected to a payment/delivery provider. Delivery pricing shown is a placeholder.")+'</p>';
+
+  document.querySelectorAll("[data-qty-inc]").forEach(function(b){ b.addEventListener("click", function(){ changeQty(isNumeric(b.getAttribute("data-qty-inc")), 1); }); });
+  document.querySelectorAll("[data-qty-dec]").forEach(function(b){ b.addEventListener("click", function(){ changeQty(isNumeric(b.getAttribute("data-qty-dec")), -1); }); });
+  document.querySelectorAll("[data-remove]").forEach(function(b){ b.addEventListener("click", function(){ removeLine(isNumeric(b.getAttribute("data-remove"))); }); });
+
+  var ds = document.getElementById("deliverySelect");
+  ds.value = String(deliveryFee); ds.addEventListener("change", function(){ deliveryFee = +ds.value; renderCartDrawer(); });
+
+  document.getElementById("couponBtn").addEventListener("click", function(){
+    var code = document.getElementById("couponInput").value.trim().toUpperCase();
+    var msg = document.getElementById("couponMsg");
+    if(code === "LOONAR10"){ couponApplied = true; msg.textContent = t("couponOk"); msg.className="coupon-msg ok"; }
+    else { couponApplied = false; msg.textContent = t("couponErr"); msg.className="coupon-msg err"; }
+    renderCartDrawer();
+  });
+
+  var waBtn = document.getElementById("waCheckout");
+  if(waBtn) waBtn.addEventListener("click", function(){
+    var lines = State.cart.map(function(l){ return "• "+(State.lang==="ar"?l.ar:l.en)+" x"+l.qty+" — "+money(l.price*l.qty); }).join("%0A");
+    var msg = "Hello LOONAR! I'd like to order:%0A"+lines+"%0A"+t("total")+": "+money(total);
+    window.open("https://wa.me/"+CONFIG.WHATSAPP_NUMBER+"?text="+msg, "_blank");
+  });
+}
+function isNumeric(v){ var n = +v; return isNaN(n) ? v : n; }
+
+function renderWishDrawer(){
+  var body = document.getElementById("wishBody");
+  if(State.wish.length===0){ body.innerHTML = '<div class="drawer-empty">'+t("emptyWish")+'</div>'; return; }
+  body.innerHTML = State.wish.map(function(id){
+    var p = findProductAny(id);
+    if(!p) return "";
+    return '<div class="line-item"><div class="line-thumb" style="background:'+TONES[p.tone]+';display:flex;align-items:center;justify-content:center;color:#fff">'+ICONS[p.icon]+'</div>'+
+      '<div class="line-info"><div class="name">'+pname(p)+'</div><div class="meta">'+money(p.sale||p.price)+'</div>'+
+      '<div class="line-controls"><button class="btn btn-primary btn-sm" data-wish-add="'+id+'">'+t("addToCart")+'</button>'+
+      '<button class="line-remove" data-wish-remove="'+id+'">'+(State.lang==="ar"?"إزالة":"Remove")+'</button></div></div></div>';
+  }).join("");
+  body.querySelectorAll("[data-wish-add]").forEach(function(b){
+    b.addEventListener("click", function(){ addToCart(findProductAny(+b.getAttribute("data-wish-add")),1); });
+  });
+  body.querySelectorAll("[data-wish-remove]").forEach(function(b){
+    b.addEventListener("click", function(){ toggleWish(+b.getAttribute("data-wish-remove")); });
+  });
+}
+
+/* =========================================================
+   QUICK VIEW MODAL
+   ========================================================= */
+function openQuickView(id){
+  var p = PRODUCTS.find(function(x){ return x.id===id; });
+  if(!p) return;
+  var box = document.getElementById("modalBox");
+  box.innerHTML =
+    '<div class="modal-media" style="background:'+TONES[p.tone]+'"><button class="modal-close" id="modalClose">&times;</button>'+ICONS[p.icon]+'</div>'+
+    '<div class="modal-info">'+
+      '<div class="pname" style="font-size:20px">'+pname(p)+'</div>'+
+      '<div class="prating"><span class="stars-ico">'+"★★★★★".slice(0,Math.round(p.rating))+'</span>'+p.rating+' · <span class="pstock '+(p.stock==='low'?'low':'in')+'">'+(p.stock==='low'?t('lowStock'):t('inStock'))+'</span></div>'+
+      '<div class="pprice">'+(p.sale?'<span class="now">'+money(p.sale)+'</span><span class="was">'+money(p.price)+'</span>':'<span class="now">'+money(p.price)+'</span>')+'</div>'+
+      '<p class="modal-desc">'+(State.lang==="ar"?"قطعة مصممة بعناية من لونار لتضيف لمسة سحرية على احتفالكم، مصنوعة بجودة عالية وألوان متناسقة مع مجموعتنا القمرية.":"A LOONAR signature piece, thoughtfully designed to add moonlit magic to your celebration — premium quality in colors curated to match our collections.")+'</p>'+
+      '<div class="modal-meta"><span>'+t("stockLbl")+': '+(p.stock==='low'?t('lowStock'):t('inStock'))+'</span></div>'+
+      '<div class="modal-qty"><div class="qty-ctrl" id="modalQtyCtrl"><button data-mq="-1">-</button><span id="modalQty">1</span><button data-mq="1">+</button></div></div>'+
+      '<div class="modal-actions">'+
+        '<button class="btn btn-primary" id="modalAdd">'+t("addToCart")+'</button>'+
+        '<button class="btn btn-ghost" id="modalWish">'+t("wishlistLbl")+'</button>'+
+      '</div>'+
+    '</div>';
+  var qty = 1;
+  box.querySelectorAll("[data-mq]").forEach(function(b){
+    b.addEventListener("click", function(){ qty = Math.max(1, qty + (+b.getAttribute("data-mq"))); document.getElementById("modalQty").textContent = qty; });
+  });
+  document.getElementById("modalAdd").addEventListener("click", function(){ addToCart(p, qty); closeQuickView(); });
+  document.getElementById("modalWish").addEventListener("click", function(){ toggleWish(p.id); renderModalWishState(); });
+  document.getElementById("modalClose").addEventListener("click", closeQuickView);
+  document.getElementById("quickView").classList.add("active");
+}
+function renderModalWishState(){}
+function closeQuickView(){ document.getElementById("quickView").classList.remove("active"); }
+
+/* =========================================================
+   BUILD YOUR CELEBRATION WIZARD
+   ========================================================= */
+var wizard = {occasion:null, color:null, milestone:null, guests:null, budget:null};
+
+var WCOLORS = [{v:"blue-silver",en:"Blue & Silver",ar:"أزرق وفضي"},{v:"purple-gold",en:"Purple & Gold",ar:"أرجواني وذهبي"},{v:"pastel",en:"Soft Pastel",ar:"ألوان ناعمة"},{v:"navy",en:"Navy & White",ar:"كحلي وأبيض"}];
+var WMILESTONE = [{v:"kids",en:"Kids",ar:"أطفال"},{v:"teen",en:"Teen",ar:"مراهقون"},{v:"adult",en:"Adult",ar:"بالغون"},{v:"milestone",en:"Milestone (30/40/50+)",ar:"مناسبة كبرى (٣٠/٤٠/٥٠+)"}];
+var WGUESTS = [{v:"10",en:"Up to 10",ar:"حتى ١٠"},{v:"30",en:"~30 Guests",ar:"~٣٠ ضيف"},{v:"60",en:"~60 Guests",ar:"~٦٠ ضيف"},{v:"100",en:"100+",ar:"١٠٠+"}];
+var WBUDGET = [{v:"200",en:"QAR 150–300",ar:"١٥٠–٣٠٠ ر.ق"},{v:"400",en:"QAR 300–500",ar:"٣٠٠–٥٠٠ ر.ق"},{v:"600",en:"QAR 500–700",ar:"٥٠٠–٧٠٠ ر.ق"},{v:"900",en:"QAR 700–900",ar:"٧٠٠–٩٠٠ ر.ق"}];
+
+function renderWizard(){
+  var steps = [
+    {key:"occasion", label:t("step1"), opts:OCCASIONS.map(function(o){ return {v:o.id, en:o.emoji+" "+o.en, ar:o.emoji+" "+o.ar}; })},
+    {key:"color", label:t("step2"), opts:WCOLORS},
+    {key:"milestone", label:t("step3"), opts:WMILESTONE},
+    {key:"guests", label:t("step4"), opts:WGUESTS},
+    {key:"budget", label:t("step5"), opts:WBUDGET}
+  ];
+  document.getElementById("wizardSteps").innerHTML = steps.map(function(s){
+    return '<div class="wstep"><h6>'+s.label+'</h6><div class="opts">'+s.opts.map(function(o){
+      return '<button class="wopt'+(wizard[s.key]===o.v?' sel':'')+'" data-wkey="'+s.key+'" data-wval="'+o.v+'">'+(State.lang==="ar"?o.ar:o.en)+'</button>';
+    }).join("")+'</div></div>';
+  }).join("");
+  document.querySelectorAll("[data-wkey]").forEach(function(b){
+    b.addEventListener("click", function(){
+      wizard[b.getAttribute("data-wkey")] = b.getAttribute("data-wval");
+      renderWizard();
+    });
+  });
+  renderWizardResult();
+}
+function renderWizardResult(){
+  var el = document.getElementById("wizardResult");
+  var filled = wizard.occasion && wizard.color && wizard.milestone && wizard.guests && wizard.budget;
+  if(!filled){ el.innerHTML = '<p style="color:var(--ink-faint);font-size:13.5px">'+t("noResult")+'</p>'; return; }
+  var budgetNum = +wizard.budget;
+  var pkg = PACKAGES.reduce(function(best, p){
+    var mid = (p.budget[0]+p.budget[1])/2;
+    var bestMid = best ? (best.budget[0]+best.budget[1])/2 : Infinity;
+    return Math.abs(mid-budgetNum) < Math.abs(bestMid-budgetNum) ? p : best;
+  }, null);
+  el.innerHTML = '<div><div class="r-title">'+t("recommended")+'</div>'+
+    '<div class="r-pkg">'+(State.lang==="ar"?pkg.ar:pkg.en)+'</div>'+
+    '<div class="r-range">'+money(pkg.budget[0])+' – '+money(pkg.budget[1])+'</div></div>'+
+    '<button class="btn btn-primary" id="wizardAdd">'+(State.lang==="ar"?"أضف هذه الباقة":"Add this Package")+'</button>';
+  document.getElementById("wizardAdd").addEventListener("click", function(){
+    addToCart({id:"pkg-"+pkg.id, en:pkg.en, ar:pkg.ar, price:pkg.price, icon:"gift", tone:"gold"}, 1);
+  });
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+function runSearch(q){
+  q = q.trim().toLowerCase();
+  var results = document.getElementById("searchResults");
+  if(!q){ results.innerHTML = ""; return; }
+  var hits = [];
+  PRODUCTS.forEach(function(p){
+    var hay = (p.en+" "+p.ar+" "+p.cat+" "+p.occ.join(" ")).toLowerCase();
+    if(hay.indexOf(q) > -1) hits.push({label:pname(p), sub:t("featured"), action:function(){ closeSearch(); openQuickView(p.id); }});
+  });
+  OCCASIONS.forEach(function(o){
+    if((o.en+" "+o.ar).toLowerCase().indexOf(q) > -1) hits.push({label:(State.lang==="ar"?o.ar:o.en), sub:t("shopByOccasion"), action:function(){ closeSearch(); jumpToShop({occ:o.id}); }});
+  });
+  COLLECTIONS.forEach(function(c){
+    if((c.en+" "+c.ar).toLowerCase().indexOf(q) > -1) hits.push({label:(State.lang==="ar"?c.ar:c.en), sub:t("curatedFor"), action:function(){ closeSearch(); jumpToShop({occ:c.tag}); }});
+  });
+  if(hits.length===0){ results.innerHTML = '<div class="search-empty">'+(State.lang==="ar"?"لا نتائج":"No results")+'</div>'; return; }
+  results.innerHTML = hits.slice(0,8).map(function(h,i){ return '<div class="search-hit" data-hit="'+i+'"><div><div>'+h.label+'</div><small>'+h.sub+'</small></div></div>'; }).join("");
+  results.querySelectorAll("[data-hit]").forEach(function(el,i){ el.addEventListener("click", function(){ hits[i].action(); }); });
+}
+function openSearch(){ document.getElementById("searchOverlay").classList.add("active"); document.getElementById("searchInput").value=""; document.getElementById("searchResults").innerHTML=""; setTimeout(function(){ document.getElementById("searchInput").focus(); },50); }
+function closeSearch(){ document.getElementById("searchOverlay").classList.remove("active"); }
+
+/* =========================================================
+   DRAWERS OPEN/CLOSE
+   ========================================================= */
+function openDrawer(id){
+  document.getElementById(id).classList.add("active");
+  document.getElementById("scrim").classList.add("active");
+}
+function closeDrawers(){
+  document.querySelectorAll(".drawer").forEach(function(d){ d.classList.remove("active"); });
+  document.getElementById("scrim").classList.remove("active");
+}
+
+/* =========================================================
+   LANGUAGE SWITCH
+   ========================================================= */
+function applyLanguage(lang){
+  State.lang = lang; saveState();
+  document.getElementById("app").setAttribute("dir", lang==="ar" ? "rtl" : "ltr");
+  document.getElementById("app").setAttribute("lang", lang==="ar" ? "ar" : "en");
+  document.querySelectorAll("[data-lang-btn]").forEach(function(b){
+    b.classList.toggle("active", b.getAttribute("data-lang-btn")===lang);
+  });
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    el.textContent = t(el.getAttribute("data-i18n"));
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(function(el){
+    el.setAttribute("placeholder", t(el.getAttribute("data-i18n-ph")));
+  });
+  renderAll();
+}
+
+/* =========================================================
+   INIT / EVENT WIRING
+   ========================================================= */
+function renderAll(){
+  renderNav(); renderTrust(); renderOccasions(); renderCategories();
+  renderWizard(); renderCollections(); renderFilters(); renderProducts();
+  renderPackages(); renderFooter(); updateCounts(); renderCartDrawer(); renderWishDrawer();
+}
+
+function init(){
+  document.querySelectorAll("[data-lang-btn]").forEach(function(b){
+    b.addEventListener("click", function(){ applyLanguage(b.getAttribute("data-lang-btn")); });
+  });
+
+  document.getElementById("searchBtn").addEventListener("click", openSearch);
+  document.getElementById("searchClose").addEventListener("click", closeSearch);
+  document.getElementById("searchInput").addEventListener("input", function(e){ runSearch(e.target.value); });
+  document.getElementById("searchOverlay").addEventListener("click", function(e){ if(e.target.id==="searchOverlay") closeSearch(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape"){ closeSearch(); closeDrawers(); closeQuickView(); } });
+
+  document.getElementById("cartBtn").addEventListener("click", function(){ openDrawer("cartDrawer"); });
+  document.getElementById("wishBtn").addEventListener("click", function(){ openDrawer("wishDrawer"); });
+  document.querySelectorAll("[data-close-drawer]").forEach(function(b){ b.addEventListener("click", closeDrawers); });
+  document.getElementById("scrim").addEventListener("click", function(){ closeDrawers(); closeQuickView(); });
+
+  document.getElementById("quickView").addEventListener("click", function(e){ if(e.target.id==="quickView") closeQuickView(); });
+
+  document.getElementById("navToggle").addEventListener("click", function(){
+    var nav = document.getElementById("mainNav");
+    var open = nav.classList.toggle("open");
+    document.getElementById("navToggle").setAttribute("aria-expanded", open);
+  });
+
+  document.getElementById("waFab").addEventListener("click", function(){
+    var msg = encodeURIComponent(State.lang==="ar" ? "مرحبًا لونار! أحتاج مساعدة في اختيار منتج للاحتفال." : "Hi LOONAR! I need help choosing something for my celebration.");
+    window.open("https://wa.me/"+CONFIG.WHATSAPP_NUMBER+"?text="+msg, "_blank");
+  });
+
+  document.getElementById("nlForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var email = document.getElementById("nlEmail").value.trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    var msg = document.getElementById("nlMsg");
+    msg.textContent = ok ? t("nlHonest") : t("nlInvalid");
+    if(ok) document.getElementById("nlEmail").value = "";
+  });
+
+  applyLanguage(State.lang || "en");
+}
+
+document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
