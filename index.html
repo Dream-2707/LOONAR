@@ -533,6 +533,34 @@ footer{border-top:1px solid var(--line);padding:60px 0 26px;background:rgba(0,0,
    / Studio modals and the toast so those surfaces stay clean. */
 #magicCursor{position:fixed;inset:0;z-index:78;pointer-events:none;}
 
+/* ============ CART: OPTIONAL CONTACT FIELDS ============ */
+.cart-contact{display:flex;gap:8px;margin-bottom:2px;}
+.cart-contact input{flex:1;padding:9px 11px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(255,255,255,.04);color:var(--ink);font-size:12.5px;transition:border-color var(--t-fast) ease;}
+.cart-contact input:focus-visible{border-color:var(--rose-gold);}
+
+/* ============ ORDER SUMMARY (PRINT / SAVE AS PDF) ============
+   #invoicePrint is invisible on screen; a print stylesheet hides
+   everything else and shows only this, so "Print" in any browser's
+   dialog (with destination "Save as PDF") produces a real, itemized
+   PDF — no external library, works completely offline. */
+#invoicePrint{display:none;}
+@media print{
+  body *{visibility:hidden;}
+  #invoicePrint, #invoicePrint *{visibility:visible;}
+  #invoicePrint{display:block;position:absolute;top:0;left:0;width:100%;padding:28px;background:#fff;color:#1a1530;font-family:Georgia,'Times New Roman',serif;}
+}
+#invoicePrint .inv-brand{font-size:26px;font-weight:700;color:#3a1f5d;}
+#invoicePrint .inv-brand em{font-style:normal;color:#8c5a62;font-size:15px;margin-inline-start:10px;}
+#invoicePrint .inv-tag{font-size:12px;font-style:italic;color:#555;margin-top:4px;}
+#invoicePrint .inv-meta{margin:18px 0 6px;font-size:12px;color:#333;display:flex;flex-direction:column;gap:3px;}
+#invoicePrint table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px;}
+#invoicePrint th{text-align:start;border-bottom:2px solid #3a1f5d;padding:8px 6px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#3a1f5d;}
+#invoicePrint td{padding:8px 6px;border-bottom:1px solid #ddd;}
+#invoicePrint .inv-totals{margin-top:14px;margin-inline-start:auto;max-width:280px;font-size:13px;}
+#invoicePrint .inv-totals .row{display:flex;justify-content:space-between;padding:4px 0;}
+#invoicePrint .inv-totals .grand{font-weight:700;font-size:16px;border-top:2px solid #3a1f5d;margin-top:6px;padding-top:8px;}
+#invoicePrint .inv-footer{margin-top:26px;font-size:11.5px;color:#555;border-top:1px solid #ddd;padding-top:12px;}
+
 /* ============ STORE STUDIO — owner-only quick-add tool ============
    A local, browser-side workspace for the store owner: drag in a product
    photo, fill in a few fields, and it previews instantly in the live
@@ -973,6 +1001,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 26px;background:rgba(0,0,
 
   <div id="toast"></div>
   <canvas id="magicCursor" aria-hidden="true"></canvas>
+  <div id="invoicePrint" aria-hidden="true"></div>
 </div>
 
 <script>
@@ -1164,7 +1193,13 @@ var I18N = {
     nlHonest:"Thanks! Email capture will go live once connected to a mail provider.", nlInvalid:"Please enter a valid email address.",
     deliveryStd:"Standard Qatar Delivery (2–4 days)", deliveryExp:"Express Delivery (same/next day)",
     buyNow:"Buy Now", wishlistLbl:"Wishlist", share:"Share", related:"Complete the Look", qty:"Qty",
-    stockLbl:"Availability"
+    stockLbl:"Availability",
+    custNamePh:"Your name (optional)", custPhonePh:"Phone number (optional)",
+    invoiceBtn:"Download Order Summary (PDF)", invoiceTitle:"Order Summary",
+    invoiceRef:"Order Reference", invoiceDate:"Date", invoiceCustomer:"Customer",
+    invoiceItem:"Item", invoiceQty:"Qty", invoicePrice:"Price", invoiceLineTotal:"Total",
+    invoicePayment:"Payment: to be confirmed via WhatsApp —", invoiceThanks:"Thank you for shopping with LOONAR.",
+    invoiceEmptyErr:"Your cart is empty — add something first."
   },
   ar:{
     topbar:"✨ توصيل سريع داخل قطر · دفع آمن · الطلب متاح عبر واتساب",
@@ -1198,7 +1233,13 @@ var I18N = {
     nlHonest:"شكرًا لكم! سيتم تفعيل الاشتراك عند ربطه بمزود بريد إلكتروني.", nlInvalid:"يرجى إدخال بريد إلكتروني صحيح.",
     deliveryStd:"توصيل قطر العادي (٢-٤ أيام)", deliveryExp:"توصيل سريع (نفس اليوم/اليوم التالي)",
     buyNow:"اشترِ الآن", wishlistLbl:"المفضلة", share:"مشاركة", related:"أكمل الإطلالة", qty:"الكمية",
-    stockLbl:"التوفر"
+    stockLbl:"التوفر",
+    custNamePh:"اسمك (اختياري)", custPhonePh:"رقم الهاتف (اختياري)",
+    invoiceBtn:"تحميل ملخص الطلب (PDF)", invoiceTitle:"ملخص الطلب",
+    invoiceRef:"رقم الطلب", invoiceDate:"التاريخ", invoiceCustomer:"العميل",
+    invoiceItem:"المنتج", invoiceQty:"الكمية", invoicePrice:"السعر", invoiceLineTotal:"الإجمالي",
+    invoicePayment:"الدفع: سيتم التأكيد عبر واتساب —", invoiceThanks:"شكرًا لتسوقكم مع لونار.",
+    invoiceEmptyErr:"سلتكم فارغة — أضيفوا منتجًا أولاً."
   }
 };
 
@@ -1517,6 +1558,8 @@ var couponApplied = false;
 var couponMsgText = "";
 var couponMsgClass = "coupon-msg";
 var deliveryFee = 15;
+var custName = "";
+var custPhone = "";
 
 function renderCartDrawer(){
   var body = document.getElementById("cartBody");
@@ -1539,6 +1582,7 @@ function renderCartDrawer(){
   var total = subtotal - discount + delivery;
 
   document.getElementById("cartFoot").innerHTML =
+    '<div class="cart-contact"><input id="custNameInput" type="text" placeholder="'+t("custNamePh")+'" value="'+custName.replace(/"/g,"&quot;")+'"><input id="custPhoneInput" type="tel" placeholder="'+t("custPhonePh")+'" value="'+custPhone.replace(/"/g,"&quot;")+'"></div>'+
     '<div class="coupon-row"><input id="couponInput" type="text" placeholder="'+t("couponPh")+'"><button class="btn btn-ghost btn-sm" id="couponBtn">'+t("apply")+'</button></div>'+
     '<div class="'+couponMsgClass+'" id="couponMsg">'+couponMsgText+'</div>'+
     '<select class="select-field" id="deliverySelect"><option value="15">'+t("deliveryStd")+' — '+money(15)+'</option><option value="35">'+t("deliveryExp")+' — '+money(35)+'</option></select>'+
@@ -1547,12 +1591,16 @@ function renderCartDrawer(){
     '<div class="totals-row"><span>'+t("delivery")+'</span><span>'+money(delivery)+'</span></div>'+
     '<div class="totals-row grand"><span>'+t("total")+'</span><span>'+money(total)+'</span></div>'+
     '<button class="btn btn-primary" id="waCheckout" '+(State.cart.length===0?'disabled':'')+'>'+t("checkoutWa")+'</button>'+
+    '<button class="btn btn-ghost" id="invoiceBtn" '+(State.cart.length===0?'disabled':'')+'>🧾 '+t("invoiceBtn")+'</button>'+
     '<button class="btn btn-ghost" disabled title="'+t("payDisabled")+'">'+t("payCard")+' — '+t("payDisabled")+'</button>'+
     '<p class="foot-note">'+(State.lang==="ar"?"سيتم تفعيل بوابة الدفع وأسعار التوصيل الفعلية عند الربط مع مزود الدفع والشحن.":"Card payments and live delivery pricing activate once connected to a payment/delivery provider. Delivery pricing shown is a placeholder.")+'</p>';
 
   document.querySelectorAll("[data-qty-inc]").forEach(function(b){ b.addEventListener("click", function(){ changeQty(isNumeric(b.getAttribute("data-qty-inc")), 1); }); });
   document.querySelectorAll("[data-qty-dec]").forEach(function(b){ b.addEventListener("click", function(){ changeQty(isNumeric(b.getAttribute("data-qty-dec")), -1); }); });
   document.querySelectorAll("[data-remove]").forEach(function(b){ b.addEventListener("click", function(){ removeLine(isNumeric(b.getAttribute("data-remove"))); }); });
+
+  document.getElementById("custNameInput").addEventListener("input", function(e){ custName = e.target.value; });
+  document.getElementById("custPhoneInput").addEventListener("input", function(e){ custPhone = e.target.value; });
 
   var ds = document.getElementById("deliverySelect");
   ds.value = String(deliveryFee); ds.addEventListener("change", function(){ deliveryFee = +ds.value; renderCartDrawer(); });
@@ -1567,11 +1615,57 @@ function renderCartDrawer(){
   var waBtn = document.getElementById("waCheckout");
   if(waBtn) waBtn.addEventListener("click", function(){
     var lines = State.cart.map(function(l){ return "• "+(State.lang==="ar"?l.ar:l.en)+" x"+l.qty+" — "+money(l.price*l.qty); }).join("%0A");
-    var msg = "Hello LOONAR! I'd like to order:%0A"+lines+"%0A"+t("total")+": "+money(total);
+    var whoLine = (custName.trim() || custPhone.trim()) ? "%0A"+t("invoiceCustomer")+": "+[custName.trim(),custPhone.trim()].filter(Boolean).join(" · ") : "";
+    var msg = "Hello LOONAR! I'd like to order:%0A"+lines+"%0A"+t("total")+": "+money(total)+whoLine;
     window.open("https://wa.me/"+CONFIG.WHATSAPP_NUMBER+"?text="+msg, "_blank");
+  });
+
+  var invBtn = document.getElementById("invoiceBtn");
+  if(invBtn) invBtn.addEventListener("click", function(){
+    printOrderSummary(subtotal, discount, delivery, total);
   });
 }
 function isNumeric(v){ var n = +v; return isNaN(n) ? v : n; }
+
+/* Builds a real, itemized order summary and hands it to the browser's own
+   print dialog — choosing "Save as PDF" there produces an actual PDF file.
+   No external library, no server, works offline. */
+function printOrderSummary(subtotal, discount, delivery, total){
+  if(State.cart.length === 0){ toast(t("invoiceEmptyErr")); return; }
+  var ref = "LOONAR-" + new Date().toISOString().replace(/[-:T]/g,"").slice(0,12);
+  var dateStr = new Date().toLocaleString(State.lang==="ar" ? "ar-EG" : "en-GB", {dateStyle:"medium", timeStyle:"short"});
+  var rows = State.cart.map(function(l){
+    return "<tr><td>"+(State.lang==="ar"?l.ar:l.en)+"</td><td>"+l.qty+"</td><td>"+money(l.price)+"</td><td>"+money(l.price*l.qty)+"</td></tr>";
+  }).join("");
+  var whoRow = (custName.trim() || custPhone.trim())
+    ? "<div>"+t("invoiceCustomer")+": "+[custName.trim(), custPhone.trim()].filter(Boolean).join(" · ")+"</div>" : "";
+
+  var html =
+    '<div class="inv-brand">LOONAR<em>لونار</em></div>'+
+    '<div class="inv-tag">'+t("footerTag")+'</div>'+
+    '<div class="inv-meta">'+
+      '<div>'+t("invoiceRef")+': '+ref+'</div>'+
+      '<div>'+t("invoiceDate")+': '+dateStr+'</div>'+
+      whoRow+
+    '</div>'+
+    '<table><thead><tr><th>'+t("invoiceItem")+'</th><th>'+t("invoiceQty")+'</th><th>'+t("invoicePrice")+'</th><th>'+t("invoiceLineTotal")+'</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table>'+
+    '<div class="inv-totals">'+
+      '<div class="row"><span>'+t("subtotal")+'</span><span>'+money(subtotal)+'</span></div>'+
+      (discount>0?'<div class="row"><span>'+(State.lang==="ar"?"الخصم":"Discount")+'</span><span>-'+money(discount)+'</span></div>':'')+
+      '<div class="row"><span>'+t("delivery")+'</span><span>'+money(delivery)+'</span></div>'+
+      '<div class="row grand"><span>'+t("total")+'</span><span>'+money(total)+'</span></div>'+
+    '</div>'+
+    '<div class="inv-footer">'+
+      '<p>'+t("invoicePayment")+' +'+CONFIG.WHATSAPP_NUMBER+'</p>'+
+      '<p>'+t("invoiceThanks")+'</p>'+
+    '</div>';
+
+  var el = document.getElementById("invoicePrint");
+  el.setAttribute("dir", State.lang==="ar" ? "rtl" : "ltr");
+  el.innerHTML = html;
+  window.print();
+}
 
 function renderWishDrawer(){
   var body = document.getElementById("wishBody");
